@@ -401,6 +401,10 @@ def check_options(parser):
 
                 sys.exit(1)
 
+            else:
+
+                args.bwa = bwapath[0]
+
         else:
 
             print("Can not locate bwa, please input full path of bwa\n")
@@ -447,6 +451,10 @@ def check_options(parser):
                 parser.print_help()
 
                 sys.exit(1)
+
+            else:
+
+                args.jellyfish = jellyfishpath[0]
 
         else:
 
@@ -517,9 +525,9 @@ def check_options(parser):
     # Print Checked information
     print("#"*40)
 
-    print("bwa version:", bwaversion)
+    print("bwa version:", args.bwa, bwaversion)
 
-    print("jellyfish version:", jellyfishversion)
+    print("jellyfish version:", args.jellyfish, jellyfishversion)
 
     print("genome file:", args.genome)
 
