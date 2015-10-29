@@ -35,7 +35,7 @@ def main():
 
     maxkmerscore = int(args.length * args.homology / 100) - kmer
 
-    pool = Pool(args.threads)
+    jfpool = Pool(args.threads)
 
     # ?build kmerindex
     jfkmerfile = os.path.join(args.saved,(os.path.basename(args.genome)+'_'+str(kmer)+'mer.jf'))
@@ -185,13 +185,15 @@ def main():
 
     jffinished = 0
 
-    for curpblist in pool.imap_unordered(jellyfish.kmerfilterprobe, jffpbrunerlist):
+    for curpblist in jfpool.imap_unordered(jellyfish.kmerfilterprobe, jffpbrunerlist):
 
         jffilteredprobe.extend(curpblist)
 
         jffinished += 1
 
         print("Jellyfish filter: ",jffinished,'/',len(jffpbrunerlist), sep='')
+
+    jfpool.close()
 
     print('Jellyfish filter finished!!')
 
@@ -262,7 +264,9 @@ def main():
 
     print("oligobefortmflen:",oligobefortmflen)
 
-    for (pb, keep) in pool.imap_unordered(probefilter, oligobefortmf):
+    pbftpool = Pool()
+
+    for (pb, keep) in pbftpool.imap_unordered(probefilter, oligobefortmf):
 
         if keep:
 
@@ -275,6 +279,8 @@ def main():
             print(ctedpb,'/',oligobefortmflen)
 
     pbdictbychr = dict()
+
+    pbftpool.close()
 
     for pb in keepedprobe:
 
