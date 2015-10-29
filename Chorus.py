@@ -272,7 +272,7 @@ def main():
 
             keepedprobe.append(pb)
                 # print(pb, file=tmpbwaftlistio)
-            ctedpb += 1
+        ctedpb += 1
 
         if ctedpb % 10000 == 0:
 
