@@ -26,3 +26,18 @@ ADD Chorus.py Chorus/
 ADD Choruslib/* Chorus/Choruslib/
 
 ENV PATH /opt/software/bwa:/opt/software/jellyfish/bin:$PATH
+
+ENV CHORUS_USER=chorus \
+    CHORUS_UID=1555 \
+    CHORUS_GID=1555 \
+    CHORUS_HOME=/home/chorus
+
+RUN groupadd -r $CHORUS_USER -g $CHORUS_GID
+RUN useradd -u $CHORUS_UID -r -g $CHORUS_GID -d $CHORUS_HOME -c "Chorus user" $CHORUS_USER
+
+ADD ./script/Chorus.sh /usr/bin/Chorus
+RUN chmod +x /usr/bin/Chorus
+
+WORKDIR $CHORUS_HOME
+
+ENTRYPOINT ["/usr/bin/Chorus"]

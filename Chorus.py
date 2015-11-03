@@ -44,29 +44,31 @@ def main():
 
     if os.path.isfile(jfkmerfile):
 
-        print("find:", jfkmerfile)
+        if not args.docker:
 
-        kmmess = "Found kmerfile "+jfkmerfile+". Do you want rebuild it?  Press Y or N to continue:"
+            print("find:", jfkmerfile)
 
-        print(kmmess)
+            kmmess = "Found kmerfile "+jfkmerfile+". Do you want rebuild it?  Press Y or N to continue:"
 
-        while True:
+            print(kmmess)
 
-            char = getch()
+            while True:
 
-            if char.lower() in ("y", "n"):
+                char = getch()
 
-                print(char)
+                if char.lower() in ("y", "n"):
 
-                if char == 'y':
+                    print(char)
 
-                    kmerbuild = True
+                    if char == 'y':
 
-                elif char == 'n':
+                        kmerbuild = True
 
-                    kmerbuild = False
+                    elif char == 'n':
 
-                break
+                        kmerbuild = False
+
+                    break
 
 
     # ?build bwa index
@@ -80,29 +82,31 @@ def main():
 
     if os.path.isfile(bwatestindex):
 
-        print('find:', bwatestindex)
+        if not args.docker:
 
-        bwamess = "Found bwa index file " + bwatestindex + ". Do you want rebuild it? Press Y or N to continue:"
+            print('find:', bwatestindex)
 
-        print(bwamess)
+            bwamess = "Found bwa index file " + bwatestindex + ". Do you want rebuild it? Press Y or N to continue:"
 
-        while True:
+            print(bwamess)
 
-            char = getch()
+            while True:
 
-            if char.lower() in ("y", "n"):
+                char = getch()
 
-                print(char)
+                if char.lower() in ("y", "n"):
 
-                if char == 'y':
+                    print(char)
 
-                    bwabuild = True
+                    if char == 'y':
 
-                elif char == 'n':
+                        bwabuild = True
 
-                    bwabuild = False
+                    elif char == 'n':
 
-                break
+                        bwabuild = False
+
+                    break
 
     print("genomesize:",genomesize, "kmer:",kmer, "jfkmerfile:",
           jfkmerfile, "kmerbuild:", kmerbuild, "bwabuild:", bwabuild, "threads:", args.threads)
@@ -507,21 +511,23 @@ def check_options(parser):
     # Start check saved folder
     if os.path.exists(args.saved):
 
-        print(args.saved, "exists. Everything in this folder will be remove. Press Y or N to continue: ")
+        if not args.docker:
 
-        while True:
+            print(args.saved, "exists. Everything in this folder will be remove. Press Y or N to continue: ")
 
-            char = getch()
+            while True:
 
-            if char.lower() in ("y", "n"):
+                char = getch()
 
-                print(char)
+                if char.lower() in ("y", "n"):
 
-                if char == 'n':
+                    print(char)
 
-                    sys.exit(1)
+                    if char == 'n':
 
-                break
+                        sys.exit(1)
+
+                    break
 
     else:
 
@@ -607,6 +613,7 @@ def get_options():
 
     parser.add_argument('-d', '--dtm', dest='dtm', help='dTm, from 0 to 37', default=10, type=float)
 
+    parser.add_argument('--docker', default=False)
     # parser.parse_args(['--version'])
     # args = parser.parse_args()
 
