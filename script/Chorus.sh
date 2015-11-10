@@ -8,7 +8,8 @@ NC='\033[0m'
 
 if ! id -u $CHORUS_USER > /dev/null 2>&1; then
   echo -e "use local user:  ${BLUE}$CHORUS_USER${NC}"
-  adduser --force-badname -u  --gecos "" $CHORUS_UID $CHORUS_USER
+  addgroup --gid $CHORUS_UID  $CHORUS_USER
+  adduser --force-badname --disabled-password  --gecos "" --uid  $CHORUS_UID --gid $CHORUS_UID $CHORUS_USER
 fi
 
 if [ -e $CHORUS_HOME ];
