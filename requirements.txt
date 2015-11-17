@@ -2,3 +2,4 @@ cython
 numpy
 pyfasta
 primer3-py
+pandas
