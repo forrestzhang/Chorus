@@ -31,13 +31,6 @@ def main():
 
     probeout = open(outfilename, 'w')
 
-    # def jfpbfilter(probe):
-    #
-    #     proberes = jellyfish.jfprobekmerfilter(jfpath=args.jellyfish, jfkmerfile=args.kmerfile,
-    #                                 mink=args.mink, maxk=args.maxk, mer=args.kmer, probe=probe)
-    #
-    #     return proberes
-
     for currentprobe in jfpool.imap_unordered(jellyfish.jfprobekmerfilter, probelist):
 
         print(currentprobe['chro'] ,
@@ -45,19 +38,7 @@ def main():
                 currentprobe['end'] ,
                 currentprobe['seq'] ,
                 currentprobe['keep'] ,
-                currentprobe['sumscore'])
-
-    # for i in probelist:
-    #
-    #     currentprobe = jfpbfilter(i)
-    #
-    #     print(currentprobe['chro'] ,
-    #             currentprobe['start'] ,
-    #             currentprobe['end'] ,
-    #             currentprobe['seq'] ,
-    #             currentprobe['keep'] ,
-    #             currentprobe['sumscore'])
-
+                currentprobe['sumscore'],file=probeout)
 
     probeout.close()
 

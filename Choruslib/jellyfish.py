@@ -485,7 +485,7 @@ def jfprobekmerfilter(jfpbkfruner):
 
         number = int(lin)
 
-        print(number)
+        # print(number)
 
         if number >= jfpbkfruner.maxk:
 
