@@ -432,6 +432,94 @@ def kmerfilterprobe(jffpbruner):
     return probelist
 
 
+def jfprobekmerfilter(jfpbkfruner):
+
+    """
+    :param jfpath: jellyfish bin path
+    :param jfkmerfile: jellyfish kmer count file
+    :param mer: int, kmer
+    :param sequence: string, sequence for kmerscore count
+    :param max: max kmer score
+    :param min: min kmer score
+    :return: list, kmerscore list
+    """
+    # jfpath = , jfkmerfile, mer, probe, maxk, mink
+
+    probeinfo = jfpbkfruner.probe.split('\t')
+
+    sequence = probeinfo[3]
+
+    seqlen = len(sequence)
+
+    jfpath = subprocesspath.subprocesspath(jfpbkfruner.jfpath)
+
+    jfkmerfile = subprocesspath.subprocesspath(jfpbkfruner.jfkmerfile)
+
+    jfquerycommand = ' '.join([jfpath, 'query', '-i', '-l', jfkmerfile])
+
+    print(jfquerycommand)
+
+    kmerct = subprocess.Popen(jfquerycommand, shell=True, stdout=subprocess.PIPE,
+                              stdin=subprocess.PIPE)
+
+
+    mer = int(jfpbkfruner.mer)
+
+    end = mer
+
+    jfkmercount = list()
+
+    keep = True
+
+    while (end <= seqlen):
+
+        start = end - mer
+
+        subseq = sequence[start:end]+'\n'
+
+        kmerct.stdin.write(subseq.encode('ascii'))
+
+        kmerct.stdin.flush()
+
+        lin = kmerct.stdout.readline().decode('utf-8').rstrip('\n')
+
+        number = int(lin)
+
+        print(number)
+
+        if number >= jfpbkfruner.maxk:
+
+            keep = False
+
+        if number <= jfpbkfruner.mink:
+
+            keep = False
+
+        jfkmercount.append(number)
+
+        end += 1
+
+    kmerct.stdin.close()
+
+    kmerct.stdout.close()
+
+    # kmerct.terminate()
+
+    kmerct.wait()
+
+    jfprobefileter = dict()
+
+    jfprobefileter['chro'] = probeinfo[0]
+    jfprobefileter['start'] = probeinfo[1]
+    jfprobefileter['end'] = probeinfo[2]
+    jfprobefileter['seq'] = probeinfo[3]
+    jfprobefileter['keep'] = keep
+    jfprobefileter['sumscore'] = sum(jfkmercount)
+
+    return jfprobefileter
+
+
+
 class JFfpbruner():
 
     def __init__(self, jfpath, jfkmerfile, mer, pyfasta, seqname, start, end, pblength, maxkmerscore, step=4):
@@ -458,89 +546,22 @@ class JFfpbruner():
         self.end =end
 
 
-def jfprobekmerfilter(jfpath, jfkmerfile, mer, probe, maxk, mink):
+class JFpbkfruner():
 
-    """
-    :param jfpath: jellyfish bin path
-    :param jfkmerfile: jellyfish kmer count file
-    :param mer: int, kmer
-    :param sequence: string, sequence for kmerscore count
-    :param max: max kmer score
-    :param min: min kmer score
-    :return: list, kmerscore list
-    """
-    probeinfo = probe.split('\t')
+    def __init__(self, jfpath, jfkmerfile, mer, probe, maxk, mink):
 
-    sequence = probeinfo[3]
+        self.jfpath = jfpath
 
-    seqlen = len(sequence)
+        self.jfkmerfile = jfkmerfile
 
-    jfpath = subprocesspath.subprocesspath(jfpath)
+        self.mer = mer
 
-    jfkmerfile = subprocesspath.subprocesspath(jfkmerfile)
+        self.probe = probe
 
-    jfquerycommand = ' '.join([jfpath, 'query', '-i', '-l', jfkmerfile])
+        self.maxk = maxk
 
-    print(jfquerycommand)
+        self.mink = mink
 
-    kmerct = subprocess.Popen(jfquerycommand, shell=True, stdout=subprocess.PIPE,
-                              stdin=subprocess.PIPE)
-
-
-    mer = int(mer)
-
-    end = mer
-
-    jfkmercount = list()
-
-    keep = True
-
-    while (end <= seqlen):
-
-        start = end - mer
-
-        subseq = sequence[start:end]+'\n'
-
-        kmerct.stdin.write(subseq.encode('ascii'))
-
-        kmerct.stdin.flush()
-
-        lin = kmerct.stdout.readline().decode('utf-8').rstrip('\n')
-
-        number = int(lin)
-
-        print(number)
-
-        if number >= maxk:
-
-            keep = False
-
-        if number <= mink:
-
-            keep = False
-
-        jfkmercount.append(number)
-
-        end += 1
-
-    kmerct.stdin.close()
-
-    kmerct.stdout.close()
-
-    # kmerct.terminate()
-
-    kmerct.wait()
-
-    jfprobefileter = dict()
-
-    jfprobefileter['chro'] = probeinfo[0]
-    jfprobefileter['start'] = probeinfo[1]
-    jfprobefileter['end'] = probeinfo[2]
-    jfprobefileter['seq'] = probeinfo[3]
-    jfprobefileter['keep'] = keep
-    jfprobefileter['sumscore'] = sum(jfkmercount)
-
-    return jfprobefileter
 
 
 if __name__ == '__main__':

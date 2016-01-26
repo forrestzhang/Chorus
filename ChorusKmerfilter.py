@@ -16,7 +16,10 @@ def main():
 
     with open(args.input, 'r') as probein:
         for i in probein:
-            probelist.append(i.strip('\n'))
+
+            jfpbkfruner = jellyfish.JFpbkfruner(jfpath=args.jellyfish, jfkmerfile=args.kmerfile,mink=args.mink, maxk=args.maxk, mer=args.kmer, probe=i.strip('\n'))
+
+            probelist.append(jfpbkfruner)
 
     probein.close()
 
@@ -28,14 +31,14 @@ def main():
 
     probeout = open(outfilename, 'w')
 
-    def jfpbfilter(probe):
+    # def jfpbfilter(probe):
+    #
+    #     proberes = jellyfish.jfprobekmerfilter(jfpath=args.jellyfish, jfkmerfile=args.kmerfile,
+    #                                 mink=args.mink, maxk=args.maxk, mer=args.kmer, probe=probe)
+    #
+    #     return proberes
 
-        proberes = jellyfish.jfprobekmerfilter(jfpath=args.jellyfish, jfkmerfile=args.kmerfile,
-                                    mink=args.mink, maxk=args.maxk, mer=args.kmer, probe=probe)
-
-        return  proberes
-
-    for currentprobe in jfpool.imap_unordered(jfpbfilter, probelist):
+    for currentprobe in jfpool.imap_unordered(jellyfish.jfprobekmerfilter, probelist):
 
         print(currentprobe['chro'] ,
                 currentprobe['start'] ,
