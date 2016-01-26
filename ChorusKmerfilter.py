@@ -35,18 +35,7 @@ def main():
 
         return  proberes
 
-    # for currentprobe in jfpool.map(jfpbfilter, probelist):
-    #
-    #     print(currentprobe['chro'] ,
-    #             currentprobe['start'] ,
-    #             currentprobe['end'] ,
-    #             currentprobe['seq'] ,
-    #             currentprobe['keep'] ,
-    #             currentprobe['sumscore'],file=probeout)
-
-    for i in probelist:
-
-        currentprobe = jfpbfilter(i)
+    for currentprobe in jfpool.imap_unordered(jfpbfilter, probelist):
 
         print(currentprobe['chro'] ,
                 currentprobe['start'] ,
@@ -54,6 +43,17 @@ def main():
                 currentprobe['seq'] ,
                 currentprobe['keep'] ,
                 currentprobe['sumscore'])
+
+    # for i in probelist:
+    #
+    #     currentprobe = jfpbfilter(i)
+    #
+    #     print(currentprobe['chro'] ,
+    #             currentprobe['start'] ,
+    #             currentprobe['end'] ,
+    #             currentprobe['seq'] ,
+    #             currentprobe['keep'] ,
+    #             currentprobe['sumscore'])
 
 
     probeout.close()
