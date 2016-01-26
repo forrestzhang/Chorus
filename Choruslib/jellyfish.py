@@ -457,7 +457,7 @@ def jfprobekmerfilter(jfpbkfruner):
 
     jfquerycommand = ' '.join([jfpath, 'query', '-i', '-l', jfkmerfile])
 
-    print(jfquerycommand)
+    # print(jfquerycommand)
 
     kmerct = subprocess.Popen(jfquerycommand, shell=True, stdout=subprocess.PIPE,
                               stdin=subprocess.PIPE)
