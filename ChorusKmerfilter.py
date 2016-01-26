@@ -15,12 +15,16 @@ def main():
     probelist = list()
 
     with open(args.input, 'r') as probein:
-
-        probelist.append(probein.read())
+        for i in probein:
+            probelist.append(i.strip('\n'))
 
     probein.close()
 
-    outfilename = 'kmerfilted_'+args.input
+    dirout = os.path.dirname(args.input)
+
+    basename = os.path.basename(args.input)
+
+    outfilename = os.path.join( dirout,'kmerfilted_'+basename)
 
     probeout = open(outfilename, 'w')
 
@@ -31,14 +35,26 @@ def main():
 
         return  proberes
 
-    for currentprobe in jfpool.imap_unordered(jfpbfilter, probelist):
+    # for currentprobe in jfpool.map(jfpbfilter, probelist):
+    #
+    #     print(currentprobe['chro'] ,
+    #             currentprobe['start'] ,
+    #             currentprobe['end'] ,
+    #             currentprobe['seq'] ,
+    #             currentprobe['keep'] ,
+    #             currentprobe['sumscore'],file=probeout)
+
+    for i in probelist:
+
+        currentprobe = jfpbfilter(i)
 
         print(currentprobe['chro'] ,
                 currentprobe['start'] ,
                 currentprobe['end'] ,
                 currentprobe['seq'] ,
                 currentprobe['keep'] ,
-                currentprobe['sumscore'],file=probeout)
+                currentprobe['sumscore'])
+
 
     probeout.close()
 
