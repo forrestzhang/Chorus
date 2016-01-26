@@ -118,6 +118,7 @@ def check_options(parser):
 
         sys.exit(1)
     # End check input file
+    return args
 
 
 def get_options():
