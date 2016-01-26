@@ -31,7 +31,13 @@ def main():
 
     probeout = open(outfilename, 'w')
 
+    totalpb = len(probelist)
+
+    nowpb = 0
+
     for currentprobe in jfpool.imap_unordered(jellyfish.jfprobekmerfilter, probelist):
+
+        nowpb += 1
 
         print(currentprobe['chro'] ,
                 currentprobe['start'] ,
@@ -39,6 +45,10 @@ def main():
                 currentprobe['seq'] ,
                 currentprobe['keep'] ,
                 currentprobe['sumscore'],file=probeout,sep='\t')
+
+        if nowpb % 1000 == 0:
+
+            print(nowpb, "/", totalpb, sep='')
 
     probeout.close()
 
