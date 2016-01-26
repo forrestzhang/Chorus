@@ -509,6 +509,8 @@ def jfprobekmerfilter(jfpath, jfkmerfile, mer, probe, maxk, mink):
 
         number = int(lin)
 
+        print(number)
+
         if number >= maxk:
 
             keep = False
