@@ -38,7 +38,7 @@ def main():
                 currentprobe['end'] ,
                 currentprobe['seq'] ,
                 currentprobe['keep'] ,
-                currentprobe['sumscore'],file=probeout)
+                currentprobe['sumscore'],file=probeout,sep='\t')
 
     probeout.close()
 
