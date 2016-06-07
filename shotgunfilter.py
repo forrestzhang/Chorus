@@ -14,7 +14,7 @@ def main():
 
     outfile = args.outfile
 
-    jfkmerfile = args.kmer
+    jfkmerfile = args.kmerfile
 
     maxcount = args.maxcount
 
