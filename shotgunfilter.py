@@ -213,7 +213,7 @@ def get_options():
 
     parser.add_argument('-k', '--kmer', dest='kmerfile', help='kmerfile', required=True)
 
-    parser.add_argument('--mer', dest='kmer', default=17, type=int)
+    parser.add_argument('--mer', dest='mer', default=17, type=int)
 
     parser.add_argument('-j', '--jellyfish', dest='jellyfish', help='jellyfish path')
 
