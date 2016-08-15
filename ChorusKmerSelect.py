@@ -14,6 +14,8 @@ def main():
 
     probes = dict()
 
+    print(args)
+
     if args.fast:
 
         with open(args.input) as inio:
@@ -121,10 +123,20 @@ def get_options():
                         default=10000000, type=int)
 
     parser.add_argument('-f', '--fast', dest='fast', help='fast filter model, use ChorusKmerSelect filter only',
-                        default=True, type=bool)
+                        action='store_true')
 
-    parser.add_argument('-s', '--twostrand', dest='strand', help='use both + and - strand, default is True',
-                        default=True, type=bool)
+    parser.add_argument('-nf', '--no-fast', dest='fast', help='fast filter model, DO NOT use ChorusKmerSelect filter',
+                        action='store_false')
+
+    parser.set_defaults(fast=True)
+
+    parser.add_argument('-bs', '--bothstrand', dest='strand', help='use both + and - strand, default is True',
+                        action='store_true')
+
+    parser.add_argument('-ss', '--singlestrand', dest='strand', help='use both + and - strand, default is True',
+                        action='store_false')
+
+    parser.set_defaults(strand=True)
 
     parser.add_argument('-d', '--distance', dest='dis', help='Min distance between two adjacent probes, default=25',
                         default=25, type=int)
