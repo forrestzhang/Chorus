@@ -46,7 +46,7 @@ def main():
 
 
 
-    for chrom in probes:
+    for chrom in sorted(probes):
 
         prestart = 0
 
