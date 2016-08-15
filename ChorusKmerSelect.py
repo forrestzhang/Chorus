@@ -58,12 +58,17 @@ def main():
 
                 nowprob = probes[chrom][nowpbstart].split('\t')
 
-                if strandfr % 2 == 0:
+                if args.strand == True:
 
-                    nowprob.append('-')
+                    if strandfr % 2 == 0:
 
-                    nowprob[3] = revcom(nowprob[3])
+                        nowprob.append('-')
 
+                        nowprob[3] = revcom(nowprob[3])
+
+                    else:
+
+                        nowprob.append('+')
                 else:
 
                     nowprob.append('+')
