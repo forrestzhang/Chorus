@@ -31,7 +31,7 @@ def main():
     # splite sequence longer than 10M
     spsize = 10000000
 
-    step = 4
+    step = args.step
 
     maxkmerscore = int(args.length * args.homology / 100) - kmer
 
@@ -507,6 +507,13 @@ def check_options(parser):
 
         sys.exit(1)
 
+    if args.step < 1:
+
+        print("step must >1.\n")
+
+        parser.print_help()
+
+        sys.exit(1)
 
     # Start check saved folder
     if os.path.exists(args.saved):
@@ -612,6 +619,8 @@ def get_options():
     parser.add_argument('--homology', dest='homology', help='homology, from 50 to 100', default=75, type=float)
 
     parser.add_argument('-d', '--dtm', dest='dtm', help='dTm, from 0 to 37', default=10, type=float)
+
+    parser.add_argument('--step', dest='step', help='step length, min=1', default=5, type=int)
 
     parser.add_argument('--docker', default=False)
     # parser.parse_args(['--version'])
