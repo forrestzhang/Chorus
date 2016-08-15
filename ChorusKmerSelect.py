@@ -32,7 +32,7 @@ def main():
 
                 nowscore = int(lintb[-1])
 
-                if args.min <= nowscore <= args.max:
+                if args.mink <= nowscore <= args.maxk:
 
                     probes[lintb[0]][int(lintb[1])] = '\t'.join(lintb)
 
