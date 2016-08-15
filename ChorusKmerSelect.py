@@ -52,7 +52,7 @@ def main():
 
         strandfr = 1
 
-        for nowpbstart in probes[chrom]:
+        for nowpbstart in sorted(probes[chrom]):
 
             if nowpbstart > prestart+args.dis:
 
