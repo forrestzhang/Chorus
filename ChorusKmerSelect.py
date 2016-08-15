@@ -124,6 +124,8 @@ def get_options():
     parser.add_argument('-d', '--distance', dest='dis', help='Min distance between two adjacent probes, default=25',
                         default=25, type=int)
 
+    return parser
+
 
 def revcom(sequence):
 
