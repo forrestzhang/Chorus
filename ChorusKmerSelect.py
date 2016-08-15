@@ -107,7 +107,7 @@ def get_options():
                         required=True, type=str)
 
     parser.add_argument('-o', '--output', dest='output', help='output file, default=output.bed',
-                        default='output.bed', type='str')
+                        default='output.bed', type=str)
 
     parser.add_argument('-m', '--min', dest='mink', help='mini kmer score, example 900, default=0',
                         default=0, type=int)
