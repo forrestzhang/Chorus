@@ -47,7 +47,7 @@ Download Reference Genome file:
     $ docker run -v $PWD:/home/chorus -e CHORUS_USER=$USER -e CHORUS_UID=$UID \ 
       forrestzhang/docker-chorus -i TAIR10_chr_all.fas -g TAIR10_chr_all.fas -t 12
 
-Please wait unit all precess done. There is some log:
+Please wait unit all precess done. There are some logs:
 
 .. code-block:: log
 
