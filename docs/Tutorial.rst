@@ -80,7 +80,7 @@ Please wait unit all precess done. There is some log:
     Job finshed!!
 
 
-When process finsh:
+When process done:
 
 .. code-block:: bash
 
