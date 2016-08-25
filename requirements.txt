@@ -1,5 +1,3 @@
-cython
+Cython
 numpy
 pyfasta
-primer3-py
-pandas==0.16.2
