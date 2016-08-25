@@ -1,4 +1,4 @@
-FROM forrestzhang/docker-ubuntu-dev
+FROM forrestzhang/ubuntu-dev
 
 MAINTAINER Tao Zhang "forrestzhang1982@gmail.com"
 
@@ -13,7 +13,7 @@ RUN tar zxvf jellyfish-2.2.3.tar.gz && mv jellyfish-2.2.3  jellyfish && cd jelly
 
 #WORKDIR /opt/software
 ADD https://github.com/forrestzhang/primer3-py/archive/unicode.zip /opt/software/
-RUN unzip unicode.zip && cd primer3-py-unicode && python3.4 setup.py install
+RUN unzip unicode.zip && cd primer3-py-unicode && python3 setup.py install
 
 #WORKDIR /opt/software
 RUN git clone https://github.com/lh3/bwa.git && cd bwa && make
