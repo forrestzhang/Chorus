@@ -1,7 +1,7 @@
 Tutorial
 ========
 
-In this tutorial, we will build oligo porbe set from Arabidopsis genome.
+In this tutorial, we will build oligo porbe set for Arabidopsis genome.
 
 Using Docker Terminal Version
 -----------------------------
