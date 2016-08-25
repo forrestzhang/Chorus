@@ -8,16 +8,6 @@ Install Docker_
 
 .. _Docker: https://docs.docker.com/engine/installation/
 
-GUI Version
-***********
-
-Download Chorus:
-
-.. code-block:: bash
-
-    $ docker pull forrestzhang/chorus-gui
-
-
 Terminal version
 *****************
 
@@ -57,107 +47,29 @@ Download Chorus:
     -d DTM, --dtm DTM     dTm, from 0 to 37
     --docker DOCKER
 
+GUI (Test Version)
+*******************
 
+Download Chorus:
+
+.. code-block:: bash
+
+    $ docker pull forrestzhang/chorus-gui
+
+    $ docker run -i -t -p 6080:6080 -v $PWD:/home/ubuntu/Data forrestzhang/chorus-gui
+
+Open your web browse, enter http://localhost:6080
+
+In your web browse, open a LXTerminal
+
+.. code-block:: bash
+
+    $ python3 /opt/software/Chorus/ChorusGUI.py
+
+.. image:: _static/docker_GUI.jpg
 
 Manually Install
 ----------------
-
-Ubuntu 14.04 (GUI)
-******************
-
-Install dependent package
-
-.. code-block:: bash
-
-    $ apt-get update && apt-get install -y cython3  build-essential \
-        zlib1g-dev \
-        zlibc \
-        git \
-        libboost-dev \
-        autoconf \
-        libncursesw5-dev \
-        libncurses5 \
-        ncurses-dev \
-        libboost-thread-dev \
-        python3-pip \
-        samtools \
-        unzip \
-        python \
-        curl \
-        wget \
-        python3-pyqt5 \
-        libfreetype6-dev \
-        libxft-dev \
-        python3-matplotlib
-
-    $ apt-get remove -y python3-matplotlib
-
-
-Install jellyfish
-
-.. code-block:: bash
-
-    $ mkdir /opt/software
-
-    $ cd /opt/software
-
-    $ wget https://github.com/gmarcais/Jellyfish/releases/download/v2.2.3/jellyfish-2.2.3.tar.gz
-
-    $ tar zxvf jellyfish-2.2.3.tar.gz
-
-    $ mv jellyfish-2.2.3  jellyfish
-
-    $ cd jellyfish
-
-    $ ./configure && make && make install
-
-
-Install bwa
-
-.. code-block:: bash
-
-    $ cd /opt/software
-
-    $ git clone https://github.com/lh3/bwa.git
-
-    $ cd bwa
-
-    $ make
-
-
-Install primer3-py
-
-.. code-block:: bash
-
-    $ cd /opt/software
-
-    $ wget https://github.com/forrestzhang/primer3-py/archive/unicode.zip
-
-    $ unzip unicode.zip
-
-    $ cd primer3-py-unicode
-
-    $ python3 setup.py install
-
-
-Install Python dependent package
-
-.. code-block:: bash
-
-    $ pip3 install numpy pyfasta matplotlib
-
-    $ pip3 install pandas==0.16.2
-
-Download and run Chorus
-
-.. code-block:: bash
-
-        $ cd /opt/software
-
-        $ git clone https://github.com/forrestzhang/Chorus.git
-
-        $ python3 /opt/software/Chorus/ChorusGUI.py
-
 
 Ubuntu 14.04 (terminal)
 ***********************
@@ -272,3 +184,101 @@ Download Chorus
     -d DTM, --dtm DTM     dTm, from 0 to 37
     --step STEP           step length, min=1
     --docker DOCKER
+
+
+
+Ubuntu 14.04 (GUI) Test Version
+********************************
+
+Install dependent package
+
+.. code-block:: bash
+
+    $ apt-get update && apt-get install -y cython3  build-essential \
+        zlib1g-dev \
+        zlibc \
+        git \
+        libboost-dev \
+        autoconf \
+        libncursesw5-dev \
+        libncurses5 \
+        ncurses-dev \
+        libboost-thread-dev \
+        python3-pip \
+        samtools \
+        unzip \
+        python \
+        curl \
+        wget \
+        python3-pyqt5 \
+        libfreetype6-dev \
+        libxft-dev \
+        python3-matplotlib
+
+    $ apt-get remove -y python3-matplotlib
+
+
+Install jellyfish
+
+.. code-block:: bash
+
+    $ mkdir /opt/software
+
+    $ cd /opt/software
+
+    $ wget https://github.com/gmarcais/Jellyfish/releases/download/v2.2.3/jellyfish-2.2.3.tar.gz
+
+    $ tar zxvf jellyfish-2.2.3.tar.gz
+
+    $ mv jellyfish-2.2.3  jellyfish
+
+    $ cd jellyfish
+
+    $ ./configure && make && make install
+
+
+Install bwa
+
+.. code-block:: bash
+
+    $ cd /opt/software
+
+    $ git clone https://github.com/lh3/bwa.git
+
+    $ cd bwa
+
+    $ make
+
+
+Install primer3-py
+
+.. code-block:: bash
+
+    $ cd /opt/software
+
+    $ wget https://github.com/forrestzhang/primer3-py/archive/unicode.zip
+
+    $ unzip unicode.zip
+
+    $ cd primer3-py-unicode
+
+    $ python3 setup.py install
+
+
+Install Python dependent package
+
+.. code-block:: bash
+
+    $ pip3 install numpy pyfasta matplotlib
+
+    $ pip3 install pandas==0.16.2
+
+Download and run Chorus
+
+.. code-block:: bash
+
+        $ cd /opt/software
+
+        $ git clone https://github.com/forrestzhang/Chorus.git
+
+        $ python3 /opt/software/Chorus/ChorusGUI.py
