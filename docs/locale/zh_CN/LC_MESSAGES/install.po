@@ -19,7 +19,7 @@ msgstr ""
 
 #: ../../install.rst:2
 msgid "Install"
-msgstr ""
+msgstr "安装说明"
 
 #: ../../install.rst:5
 msgid "Docker"
