@@ -148,6 +148,16 @@ Install Python dependent package
 
     $ pip3 install pandas==0.16.2
 
+Download and run Chorus
+
+.. code-block:: bash
+
+        $ cd /opt/software
+
+        $ git clone https://github.com/forrestzhang/Chorus.git
+
+        $ python3 /opt/software/ChorusGUI.py
+
 
 Ubuntu 14.04 (terminal)
 ***********************
@@ -229,7 +239,3 @@ Download Chorus
     $ cd /opt/software
 
     $ git clone https://github.com/forrestzhang/Chorus.git
-
-    # or Downlaod dev version
-
-    $ wget https://github.com/forrestzhang/Chorus/archive/dev.zip
