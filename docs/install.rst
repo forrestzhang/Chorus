@@ -156,7 +156,7 @@ Download and run Chorus
 
         $ git clone https://github.com/forrestzhang/Chorus.git
 
-        $ python3 /opt/software/ChorusGUI.py
+        $ python3 /opt/software/Chorus/ChorusGUI.py
 
 
 Ubuntu 14.04 (terminal)
@@ -239,3 +239,36 @@ Download Chorus
     $ cd /opt/software
 
     $ git clone https://github.com/forrestzhang/Chorus.git
+
+    $ python3 python3 /opt/software/Chorus/Chorus.py -h
+
+
+
+    usage: Chorus [-h] [--version] [-j JELLYFISH] [-b BWA] -g GENOME -i INPUT
+              [-s SAVED] [-p PRIMER] [-t THREADS] [-l LENGTH]
+              [--homology HOMOLOGY] [-d DTM] [--step STEP] [--docker DOCKER]
+
+    Chorus Software for Oligo FISH probe design
+
+    optional arguments:
+    -h, --help            show this help message and exit
+    --version             show program's version number and exit
+    -j JELLYFISH, --jellyfish JELLYFISH
+                            jellyfish path
+    -b BWA, --bwa BWA     bwa path
+    -g GENOME, --genome GENOME
+                            fasta format genome file
+    -i INPUT, --input INPUT
+                            fasta format input file
+    -s SAVED, --save SAVED
+                            result saved folder
+    -p PRIMER, --primer PRIMER
+                            5' labeled R primer
+    -t THREADS, --threads THREADS
+                            threads number or how may cpu you wanna use
+    -l LENGTH, --length LENGTH
+                            probe length
+    --homology HOMOLOGY   homology, from 50 to 100
+    -d DTM, --dtm DTM     dTm, from 0 to 37
+    --step STEP           step length, min=1
+    --docker DOCKER
