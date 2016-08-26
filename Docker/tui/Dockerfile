@@ -21,9 +21,12 @@ RUN git clone https://github.com/lh3/bwa.git && cd bwa && make
 RUN pip3 install numpy pyfasta
 
 #RUN mkdir Chorus
-RUN mkdir -p Chorus/Choruslib
-ADD Chorus.py Chorus/
-ADD Choruslib/* Chorus/Choruslib/
+# RUN mkdir -p Chorus/Choruslib
+# ADD Chorus.py Chorus/
+# ADD Choruslib/* Chorus/Choruslib/
+WORKDIR /opt/software
+RUN git clone https://github.com/forrestzhang/Chorus.git
+
 
 ENV PATH /opt/software/bwa:/opt/software/jellyfish/bin:$PATH
 
