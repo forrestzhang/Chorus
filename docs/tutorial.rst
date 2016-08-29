@@ -120,7 +120,7 @@ Install
 *******
 
 * `Manually Install`_
-.. _`Manually Install`: \install.html
+.. _`Manually Install`: \install.html#ubuntu-14-04-terminal
 
 Run In Terminal
 ***************
