@@ -1,7 +1,7 @@
 # Chorus
 FISH Oligo design
 
-
+[Documentation](http://chorus.readthedocs.io/en/latest/)
 
 [![Documentation Status](https://readthedocs.org/projects/chorus/badge/?version=latest)](http://chorus.readthedocs.io/en/latest/?badge=latest)
 
