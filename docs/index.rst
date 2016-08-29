@@ -20,4 +20,9 @@ Indices and tables
 * :ref:`genindex`
 * :ref:`modindex`
 * :ref:`search`
+* `Jiming Jiang's Lab`_
+* taozhang.org_
+
+.. _taozhang.org: http://taozhang.org
+.. _`Jiming Jiang's Lab`: http://jianglab.horticulture.wisc.edu/
 
