@@ -40,8 +40,24 @@ def main():
 
 
     else:
-        # TBD
-        pass
+
+        with open(args.input) as inio:
+
+            for lin in inio:
+
+                lintb = lin.rstrip().split('\t')
+
+                if lintb[0] not in probes:
+
+                    probes[lintb[0]] = dict()
+
+                del lintb[4]
+
+                nowscore = int(lintb[-1])
+
+                if args.mink <= nowscore <= args.maxk:
+
+                    probes[lintb[0]][int(lintb[1])] = '\t'.join(lintb)
 
 
     outio = open(args.output, 'w')
