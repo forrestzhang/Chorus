@@ -135,6 +135,95 @@ total 1741428
 <p>There are four columns in a row, first column is chromosome name, second is oligo start site, third is oligo end site, last one is oligo probe sequence. You can use excel or text editor to open this file.</p>
 </div>
 </div>
+<div class="section" id="using-manually-install-version">
+<h2>Using Manually Install Version<a class="headerlink" href="#using-manually-install-version" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id1">
+<h3>Install<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><a class="reference external" href="install.html">Manually Install</a></li>
+</ul>
+</div>
+<div class="section" id="run-in-terminal">
+<h3>Run In Terminal<a class="headerlink" href="#run-in-terminal" title="Permalink to this headline">¶</a></h3>
+<p>Make a project folder</p>
+<div class="highlight-bash"><div class="highlight"><pre><span></span>$ <span class="nb">cd</span> ~
+$ mkdir sampleproject
+$ <span class="nb">cd</span> sampleproject
+</pre></div>
+</div>
+<p>Download reference genome</p>
+<div class="highlight-bash"><div class="highlight"><pre><span></span>$ wget https://www.arabidopsis.org/download_files/Genes/TAIR10_genome_release/TAIR10_chromosome_files/TAIR10_chr_all.fas
+</pre></div>
+</div>
+<p>Test chorus software</p>
+<div class="highlight-bassh"><div class="highlight"><pre><span></span>$ python3 /opt/software/Chorus/Chorus.py -h
+
+    usage: Chorus [-h] [--version] [-j JELLYFISH] [-b BWA] -g GENOME -i INPUT
+            [-s SAVED] [-p PRIMER] [-t THREADS] [-l LENGTH]
+            [--homology HOMOLOGY] [-d DTM] [--step STEP] [--docker DOCKER]
+
+    Chorus Software for Oligo FISH probe design
+
+    optional arguments:
+    -h, --help            show this help message and exit
+    --version             show program&#39;s version number and exit
+    -j JELLYFISH, --jellyfish JELLYFISH
+                            jellyfish path
+    -b BWA, --bwa BWA     bwa path
+    -g GENOME, --genome GENOME
+                            fasta format genome file
+    -i INPUT, --input INPUT
+                            fasta format input file
+    -s SAVED, --save SAVED
+                            result saved folder
+    -p PRIMER, --primer PRIMER
+                            5&#39; labeled R primer
+    -t THREADS, --threads THREADS
+                            threads number or how may cpu you wanna use
+    -l LENGTH, --length LENGTH
+                            probe length
+    --homology HOMOLOGY   homology, from 50 to 100
+    -d DTM, --dtm DTM     dTm, from 0 to 37
+    --step STEP           step length, min=1
+    --docker DOCKER
+</pre></div>
+</div>
+<p>Run chorus software</p>
+<div class="highlight-bash"><div class="highlight"><pre><span></span>$ python3 /opt/software/Chorus/Chorus.py -i TAIR10_chr_all.fas -g TAIR10_chr_all.fas -t <span class="m">12</span> <span class="se">\</span>
+  -j /opt/software/jellyfish/bin/jellyfish -b /opt/software/bwa/bwa -s sample
+</pre></div>
+</div>
+<p>When job finish, the oligo probes will output to &#8216;sample&#8217; folder</p>
+<div class="highlight-bash"><div class="highlight"><pre><span></span>$ <span class="nb">cd</span> sample
+$ ls -lt *
+
+    total 1741428
+    -rw-r--r-- <span class="m">1</span> root root  <span class="m">280927981</span> Aug <span class="m">24</span> 17:44 TAIR10_chr_all.fas_all.bed
+    -rw-r--r-- <span class="m">1</span> root root   <span class="m">62050561</span> Aug <span class="m">24</span> 17:44 TAIR10_chr_all.fas.bed
+    -rw-r--r-- <span class="m">1</span> root root         <span class="m">94</span> Aug <span class="m">24</span> 17:30 TAIR10_chr_all.fas.len
+    -rw-r--r-- <span class="m">1</span> root root <span class="m">1031512169</span> Aug <span class="m">24</span> 17:22 TAIR10_chr_all.fas_tmp_probe.fa
+    -rw-r--r-- <span class="m">1</span> root root   <span class="m">59833928</span> Aug <span class="m">24</span> 17:19 TAIR10_chr_all.fas.sa
+    -rw-r--r-- <span class="m">1</span> root root       <span class="m">7535</span> Aug <span class="m">24</span> 17:18 TAIR10_chr_all.fas.amb
+    -rw-r--r-- <span class="m">1</span> root root        <span class="m">682</span> Aug <span class="m">24</span> 17:18 TAIR10_chr_all.fas.ann
+    -rw-r--r-- <span class="m">1</span> root root   <span class="m">29916939</span> Aug <span class="m">24</span> 17:18 TAIR10_chr_all.fas.pac
+    -rw-r--r-- <span class="m">1</span> root root  <span class="m">119667836</span> Aug <span class="m">24</span> 17:18 TAIR10_chr_all.fas.bwt
+    -rw-r--r-- <span class="m">1</span> root root  <span class="m">121183059</span> Aug <span class="m">24</span> 17:17 TAIR10_chr_all.fas
+    -rw-r--r-- <span class="m">1</span> root root   <span class="m">78102510</span> Aug <span class="m">24</span> 17:17 TAIR10_chr_all.fas_17mer.jf
+</pre></div>
+</div>
+<p><em>TAIR10_chr_all.fas.bed</em> is the probe file.</p>
+<div class="highlight-log"><div class="highlight"><pre><span></span>$ more probes/TAIR10_chr_all.fas.bed
+1           52      96      TCCCTAAATCTTTAAATCCTACATCCATGAATCCCTAAATACCTA
+1           211     255     TTTGAGGTCAATACAAATCCTATTTCTTGTGGTTTTCTTTCCTTC
+1           346     390     CCTTAGGGTTGGTTTATCTCAAGAATCTTATTAATTGTTTGGACT
+1           426     470     TTTGTGGAAATGTTTGTTCTATCAATTTATCTTTTGTGGGAAAAT
+1           496     540     TCTTCGTTGTTGTTACGCTTGTCATCTCATCTCTCAATGATATGG
+1           551     595     TAGCATTTATTCTGAAGTTCTTCTGCTTGATGATTTTATCCTTAG
+</pre></div>
+</div>
+<p>There are four columns in a row, first column is chromosome name, second is oligo start site, third is oligo end site, last one is oligo probe sequence. You can use excel or text editor to open this file.</p>
+</div>
+</div>
 </div>
 
 
@@ -148,6 +237,11 @@ total 1741428
 <li><a class="reference internal" href="#">Tutorial</a><ul>
 <li><a class="reference internal" href="#using-docker-terminal-version">Using Docker Terminal Version</a><ul>
 <li><a class="reference internal" href="#install">Install</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#using-manually-install-version">Using Manually Install Version</a><ul>
+<li><a class="reference internal" href="#id1">Install</a></li>
+<li><a class="reference internal" href="#run-in-terminal">Run In Terminal</a></li>
 </ul>
 </li>
 </ul>
