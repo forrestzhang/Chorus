@@ -11,7 +11,7 @@ from multiprocessing import Pool
 from Choruslib import bwa
 from Choruslib import jellyfish
 from Choruslib import prefilter, primer3_filter
-
+import shutil
 
 
 class ChorusMW(QtWidgets.QMainWindow, Ui_MainWindow):
@@ -157,6 +157,23 @@ class ChorusMW(QtWidgets.QMainWindow, Ui_MainWindow):
 
                 self.jellyfishpath = jellyfishpath
 
+        else:
+
+            jellyfishpath = shutil.which("jellyfish")
+
+            if jellyfishpath:
+
+                self.jfversion = jellyfish.jfversion(jellyfishpath)
+
+                if not self.jfversion == 'None':
+                    self.label_program_JFversion.setText(self.jfversion)
+
+                    self.label_program_JFversion.setStyleSheet("color:green")
+
+                    self.lineEdit_program_JFPath.setText(jellyfishpath)
+
+                    self.jellyfishpath = jellyfishpath
+
         # set default bwa path
         if os.path.isfile(bwapath):
 
@@ -174,6 +191,26 @@ class ChorusMW(QtWidgets.QMainWindow, Ui_MainWindow):
                 self.aligner = 'BWA'
 
                 self.label_program_Alnversion.setStyleSheet("color:green")
+        else:
+
+            bwapath = shutil.which("bwa")
+
+            if bwapath:
+
+                self.bwaversion = bwa.bwaversion(bwapath)
+
+                print(bwapath, self.bwaversion)
+
+                if not self.bwaversion == 'None':
+                    self.label_program_Alnversion.setText(self.bwaversion)
+
+                    self.lineEdit_program_AlnPath.setText(bwapath)
+
+                    self.alignerpath = bwapath
+
+                    self.aligner = 'BWA'
+
+                    self.label_program_Alnversion.setStyleSheet("color:green")
 
     def setAln(self):
 
