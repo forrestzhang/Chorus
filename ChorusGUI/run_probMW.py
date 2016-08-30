@@ -140,14 +140,14 @@ class DesMainWD(QtWidgets.QMainWindow, Ui_MainWindow):
 
         self.widget.canvas.ax2.clear()
 
-        self.widget.canvas.ax1.plot(pd.rolling_mean(self.sortedperkbcount[0],100))
+        self.widget.canvas.ax1.plot(pd.rolling_mean(self.sortedperkbcount.Kb,100))
 
         self.widget.canvas.ax1.set_xlim(0, self.probe.chrlens[self.nowchr])
 
         self.widget.canvas.ax1.set_title(self.nowchr)
 
-        self.widget.canvas.line2, = self.widget.canvas.ax2.plot(self.sortedperkbcount[0])
-        # self.widget.canvas.ax2.plot(self.sortedperkbcount[0])
+        self.widget.canvas.line2, = self.widget.canvas.ax2.plot(self.sortedperkbcount.Kb)
+        # self.widget.canvas.ax2.plot(self.sortedperkbcount.Kb)
 
         self.widget.canvas.ax2.set_xlim(0, self.probe.chrlens[self.nowchr])
 
@@ -158,7 +158,7 @@ class DesMainWD(QtWidgets.QMainWindow, Ui_MainWindow):
 
         self.widget.canvas.ax2.clear()
 
-        self.widget.canvas.ax2.plot(self.sortedperkbcount[0])
+        self.widget.canvas.ax2.plot(self.sortedperkbcount.Kb)
 
         self.widget.canvas.ax2.set_xlim(self.spinBox_start.value(), self.spinBox_end.value())
 
@@ -166,7 +166,7 @@ class DesMainWD(QtWidgets.QMainWindow, Ui_MainWindow):
 
         self.widget.canvas.ax1.set_title(self.nowchr)
 
-        self.widget.canvas.ax1.plot(pd.rolling_mean(self.sortedperkbcount[0],100))
+        self.widget.canvas.ax1.plot(pd.rolling_mean(self.sortedperkbcount.Kb,100))
 
         self.widget.canvas.ax1.axvspan(self.spinBox_start.value(), self.spinBox_end.value(), facecolor=self.comboBox_color.currentText(), alpha=0.5)
 
@@ -206,7 +206,7 @@ class DesMainWD(QtWidgets.QMainWindow, Ui_MainWindow):
 
         self.widget.canvas.ax2.clear()
 
-        self.widget.canvas.ax2.plot(self.sortedperkbcount[0])
+        self.widget.canvas.ax2.plot(self.sortedperkbcount.Kb)
 
         self.widget.canvas.ax2.set_xlim(xmins, xmaxs)
 
@@ -240,7 +240,7 @@ class DesMainWD(QtWidgets.QMainWindow, Ui_MainWindow):
 
         self.widget.canvas.ax1.set_title(self.nowchr)
 
-        self.widget.canvas.ax1.plot(pd.rolling_mean(self.sortedperkbcount[0],100))
+        self.widget.canvas.ax1.plot(pd.rolling_mean(self.sortedperkbcount.Kb,100))
 
         self.widget.canvas.ax1.set_xlim(0, self.probe.chrlens[self.nowchr])
 
@@ -306,7 +306,7 @@ class DesMainWD(QtWidgets.QMainWindow, Ui_MainWindow):
 
         self.widget_OV.canvas.ax.clear()
 
-        self.widget_OV.canvas.ax.plot(pd.rolling_mean(self.sortedperkbcount[0],100))
+        self.widget_OV.canvas.ax.plot(pd.rolling_mean(self.sortedperkbcount.Kb,100))
 
         rowcount = self.tableWidget.rowCount()
 

@@ -271,7 +271,7 @@ Install Python dependent package
 
     $ pip3 install numpy pyfasta matplotlib
 
-    $ pip3 install pandas==0.16.2
+    $ pip3 install pandas
 
 Download and run Chorus
 

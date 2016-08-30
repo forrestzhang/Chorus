@@ -150,14 +150,14 @@ class DesMainWD(QtWidgets.QMainWindow, Ui_MainWindow):
 
         self.widget.canvas.ax2.clear()
 
-        self.widget.canvas.ax1.plot(pd.rolling_mean(self.sortedperkbcount[0],100))
+        self.widget.canvas.ax1.plot(pd.rolling_mean(self.sortedperkbcount.Kb,100))
 
         self.widget.canvas.ax1.set_xlim(0, self.chrlenkb[self.currentChr])
 
         self.widget.canvas.ax1.set_title(self.currentChr)
 
-        self.widget.canvas.line2, = self.widget.canvas.ax2.plot(self.sortedperkbcount[0])
-        # self.widget.canvas.ax2.plot(self.sortedperkbcount[0])
+        self.widget.canvas.line2, = self.widget.canvas.ax2.plot(self.sortedperkbcount.Kb)
+        # self.widget.canvas.ax2.plot(self.sortedperkbcount.Kb)
 
         self.widget.canvas.ax2.set_xlim(0, self.chrlenkb[self.currentChr])
 
@@ -175,7 +175,7 @@ class DesMainWD(QtWidgets.QMainWindow, Ui_MainWindow):
 
         self.widget.canvas.ax2.clear()
 
-        self.widget.canvas.ax2.plot(self.sortedperkbcount[0])
+        self.widget.canvas.ax2.plot(self.sortedperkbcount.Kb)
 
         self.widget.canvas.ax2.set_xlim(self.spinBox_start.value(), self.spinBox_end.value())
 
@@ -183,7 +183,7 @@ class DesMainWD(QtWidgets.QMainWindow, Ui_MainWindow):
 
         self.widget.canvas.ax1.set_title(self.currentChr)
 
-        self.widget.canvas.ax1.plot(pd.rolling_mean(self.sortedperkbcount[0],100))
+        self.widget.canvas.ax1.plot(pd.rolling_mean(self.sortedperkbcount.Kb,100))
 
         self.widget.canvas.ax1.axvspan(self.spinBox_start.value(), self.spinBox_end.value(), facecolor=self.comboBox_color.currentText(), alpha=0.5)
 
@@ -223,7 +223,7 @@ class DesMainWD(QtWidgets.QMainWindow, Ui_MainWindow):
 
         self.widget.canvas.ax2.clear()
 
-        self.widget.canvas.ax2.plot(self.sortedperkbcount[0])
+        self.widget.canvas.ax2.plot(self.sortedperkbcount.Kb)
 
         self.widget.canvas.ax2.set_xlim(xmins, xmaxs)
 
@@ -231,9 +231,9 @@ class DesMainWD(QtWidgets.QMainWindow, Ui_MainWindow):
 
         self.spinBox_end.setValue(xmaxs)
 
-        self.subplotprob = self.nowprobe[self.nowprobe[3] < xmaxs]
+        self.subplotprob = self.nowprobe[self.nowprobe.End < xmaxs]
 
-        self.subplotprob = self.subplotprob[self.subplotprob[3] > xmins]
+        self.subplotprob = self.subplotprob[self.subplotprob.End > xmins]
 
         self.spinBox_start.setValue(xmins)
 
@@ -257,7 +257,7 @@ class DesMainWD(QtWidgets.QMainWindow, Ui_MainWindow):
 
         self.widget.canvas.ax1.set_title(self.currentChr)
 
-        self.widget.canvas.ax1.plot(pd.rolling_mean(self.sortedperkbcount[0],100))
+        self.widget.canvas.ax1.plot(pd.rolling_mean(self.sortedperkbcount.Kb,100))
 
         self.widget.canvas.ax1.set_xlim(0, self.chrlenkb[self.currentChr])
 
@@ -324,7 +324,7 @@ class DesMainWD(QtWidgets.QMainWindow, Ui_MainWindow):
 
         self.widget_OV.canvas.ax.clear()
 
-        self.widget_OV.canvas.ax.plot(pd.rolling_mean(self.sortedperkbcount[0],100))
+        self.widget_OV.canvas.ax.plot(pd.rolling_mean(self.sortedperkbcount.Kb,100))
 
         rowcount = self.tableWidget.rowCount()
 
