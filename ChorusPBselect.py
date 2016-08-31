@@ -231,9 +231,9 @@ class DesMainWD(QtWidgets.QMainWindow, Ui_MainWindow):
 
         self.spinBox_end.setValue(xmaxs)
 
-        self.subplotprob = self.nowprobe[self.nowprobe.End < xmaxs]
+        self.subplotprob = self.nowprobe[self.nowprobe.Kb < xmaxs]
 
-        self.subplotprob = self.subplotprob[self.subplotprob.End > xmins]
+        self.subplotprob = self.subplotprob[self.subplotprob.Kb > xmins]
 
         self.spinBox_start.setValue(xmins)
 
