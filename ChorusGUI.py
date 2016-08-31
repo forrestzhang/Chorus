@@ -312,11 +312,11 @@ class ChorusMW(QtWidgets.QMainWindow, Ui_MainWindow):
         currentIndex = self.comboBox_parameter_rprimer.currentIndex()
 
         if currentIndex == 0:
-            self.lineEdit_parameter_rprimer.setText('CGTGGTCGCGTCTCA')
+            self.lineEdit_parameter_rprimer.setText('')
             self.lineEdit_parameter_rprimer.setReadOnly(True)
 
         if currentIndex == 1:
-            self.lineEdit_parameter_rprimer.setText('')
+            self.lineEdit_parameter_rprimer.setText('CGTGGTCGCGTCTCA')
             self.lineEdit_parameter_rprimer.setReadOnly(True)
 
         if currentIndex == 2:
