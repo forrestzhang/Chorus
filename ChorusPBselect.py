@@ -53,7 +53,34 @@ class DesMainWD(QtWidgets.QMainWindow, Ui_MainWindow):
         self.label_filename.setText(self.probefile)
 
         #Load probe bed file as panda data format
-        self.probes = pd.read_table(self.probefile, names=("Chr","Start","End","Seq"))
+        # self.probes = pd.read_table(self.probefile, names=("Chr","Start","End","Seq"))
+        self.probes = pd.read_table(self.probefile,  header=None)
+
+        try:
+
+            if len(self.probes.columns) == 4:
+
+                self.bedformat = 4
+
+                self.probes.rename(columns={0: 'Chr', 1: 'Start', 2: 'End', 3: 'Seq'},
+                                   inplace=True)
+
+
+
+            elif len(self.probes.columns) == 6:
+
+                self.bedformat = 6
+
+                self.probes.rename(columns={0: 'Chr', 1: 'Start', 2: 'End', 3: 'Seq', 4: 'Keep', 5: 'Kmerscore'},
+                                   inplace=True)
+
+            else:
+
+                print('Error')
+
+        except:
+
+            pass
 
         self.probes.Chr = self.probes.Chr.astype(object)
 
@@ -405,6 +432,12 @@ class DesMainWD(QtWidgets.QMainWindow, Ui_MainWindow):
             nowprobes = nowprobes.loc[sample(list(nowprobes.index), itsp)]
 
             nowprobes = nowprobes.drop('Kb', axis=1)
+
+            if self.bedformat == 6:
+
+                nowprobes = nowprobes.drop('Keep', axis=1)
+
+                nowprobes = nowprobes.drop('Kmerscore', axis=1)
 
             outfilename = itcolor + '_' + itchr + '_' + str(itstart) + '_' + str(itend) + '.bed'
 
