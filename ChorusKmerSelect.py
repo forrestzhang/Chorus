@@ -149,7 +149,7 @@ def get_options():
     parser.add_argument('-bs', '--bothstrand', dest='strand', help='use both + and - strand, default is True',
                         action='store_true')
 
-    parser.add_argument('-ss', '--singlestrand', dest='strand', help='use both + and - strand, default is True',
+    parser.add_argument('-ss', '--singlestrand', dest='strand', help='use only + strand',
                         action='store_false')
 
     parser.set_defaults(strand=True)
