@@ -85,7 +85,7 @@ class DesMainWD(QtWidgets.QMainWindow, Ui_MainWindow):
         self.probes.Chr = self.probes.Chr.astype(object)
 
         # self.probes['Kb'] = (self.probes.Start/1000).astype('int')
-        self.probes.Kb = (self.probes.Start / 1000).astype('int')
+        self.probes.Kb = (self.probes.Start / 1000).astype('int64')
 
         # self.probes.Mb = int(self.probes.Start/1000000)
 
