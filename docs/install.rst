@@ -192,6 +192,7 @@ Download and Install Anaconda_ (python 3.x verison)
 
 .. _Anaconda: https://www.continuum.io/downloads
 
+
 Add bioconda
 
 .. code-block:: bash
@@ -201,6 +202,7 @@ Add bioconda
     conda config --add channels r
     conda config --add channels bioconda
 
+
 Install dependent package
 
 .. code-block:: bash
@@ -209,6 +211,7 @@ Install dependent package
     pip install Cython 
     pip install primer3-py
     pip install pyfasta
+
 
 Ubuntu 14.04 (GUI) Test Version
 ********************************
