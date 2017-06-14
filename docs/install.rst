@@ -189,6 +189,7 @@ Anaconda (Terminal)
 ********************************
 
 Download and Install Anaconda_ (python 3.x verison)
+
 .. _Anaconda: https://www.continuum.io/downloads
 
 Add bioconda
