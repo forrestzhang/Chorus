@@ -185,7 +185,29 @@ Download Chorus
     --step STEP           step length, min=1
     --docker DOCKER
 
+Anaconda (Terminal)
+********************************
 
+Download and Install Anaconda_ (python 3.x verison)
+.. _Anaconda: https://www.continuum.io/downloads
+
+Add bioconda
+
+.. code-block:: bash
+
+    nda config --add channels conda-forge
+    conda config --add channels defaults
+    conda config --add channels r
+    conda config --add channels bioconda
+
+Install dependent package
+
+.. code-block:: bash
+    conda install bwa
+    conda install jellyfish
+    pip install Cython 
+    pip install primer3-py
+    pip install pyfasta
 
 Ubuntu 14.04 (GUI) Test Version
 ********************************
