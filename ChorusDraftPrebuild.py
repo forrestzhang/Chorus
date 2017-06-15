@@ -33,6 +33,8 @@ def get_options():
     parser.add_argument('-o', '--output', dest='output', help='output file, default=output.fa',
                         default='output.fa', type=str)
 
+    return parser
+
 
 def main():
 
