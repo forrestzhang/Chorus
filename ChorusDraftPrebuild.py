@@ -44,7 +44,9 @@ def main():
 
     faout = open(args.output, 'w')
 
-    minlen = 1e6
+    minlen = int(1e6)
+
+    print(minlen)
 
     shortseq = 'NNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNN'
 
@@ -53,10 +55,11 @@ def main():
     for chrome in fain.keys():
 
         if len(fain[chrome]) < minlen:
+            print(chrome, len(fain[chrome]))
             shortseq = shortseq + fain[chrome] + breacker
 
         else:
-
+            print(chrome, len(fain[chrome]))
             print('>%s' % chrome, file=faout)
             print(fain[chrome], file=faout)
 
@@ -70,4 +73,12 @@ def main():
 
 if __name__ == "main":
 
-    main()
+    try:
+
+        main()
+
+    except KeyboardInterrupt:
+
+        sys.stderr.write("User interrupt\n")
+
+        sys.exit(0)
