@@ -56,7 +56,7 @@ def main():
 
         if len(fain[chrome]) < minlen:
             print(chrome, len(fain[chrome]))
-            shortseq = shortseq + fain[chrome] + breacker
+            shortseq = shortseq + str(fain[chrome]) + breacker
 
         else:
             print(chrome, len(fain[chrome]))
