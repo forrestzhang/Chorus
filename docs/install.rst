@@ -206,6 +206,7 @@ Add bioconda
 Install dependent package
 
 .. code-block:: bash
+
     conda install bwa
     conda install jellyfish
     pip install Cython 
