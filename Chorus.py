@@ -2,7 +2,7 @@ import argparse
 import sys
 from Choruslib import bwa
 from Choruslib import jellyfish
-from Choruslib import prefilter, primer3_filter
+from Choruslib import prefilter, primer3_filter, spgenome
 import os
 import os.path
 from multiprocessing import Pool
@@ -145,61 +145,137 @@ def main():
 
     jffilteredprobe = list()
 
-    fastain = Fasta(args.input)
+#####
 
-    jffpbrunerlist = list()
+    if genomesize < 1000:
 
-    for seqname in fastain.keys():
+        fastain = Fasta(args.input)
 
-        chrlen = len(fastain[seqname])
+        jffpbrunerlist = list()
 
-        if chrlen < spsize:
+        for seqname in fastain.keys():
 
-            start = 0
+            chrlen = len(fastain[seqname])
 
-            end = chrlen - 1
+            if chrlen < spsize:
 
-            jffpbruner = jellyfish.JFfpbruner(jfpath=args.jellyfish, jfkmerfile=jfkmerfile, mer=kmer,
-                                              pyfasta=fastain, seqname=seqname, pblength=args.length,
-                                              maxkmerscore=maxkmerscore, start=start,
-                                              end=end, step=step)
+                start = 0
 
-            jffpbrunerlist.append(jffpbruner)
-
-        else:
-
-            chrblock = int(chrlen/spsize) + 1
-
-            for i in range(chrblock):
-
-                start = i * spsize
-
-                end = start + spsize - 1
-
-                if end >= chrlen:
-
-                    end = chrlen - 1
+                end = chrlen - 1
 
                 jffpbruner = jellyfish.JFfpbruner(jfpath=args.jellyfish, jfkmerfile=jfkmerfile, mer=kmer,
-                                              pyfasta=fastain, seqname=seqname, pblength=args.length,
-                                              maxkmerscore=maxkmerscore, start=start,
-                                              end=end, step=step)
+                                                  pyfasta=fastain, seqname=seqname, pblength=args.length,
+                                                  maxkmerscore=maxkmerscore, start=start,
+                                                  end=end, step=step)
 
                 jffpbrunerlist.append(jffpbruner)
 
-    jffinished = 0
+            else:
 
-    for curpblist in jfpool.imap_unordered(jellyfish.kmerfilterprobe, jffpbrunerlist):
+                chrblock = int(chrlen/spsize) + 1
 
-        jffilteredprobe.extend(curpblist)
+                for i in range(chrblock):
 
-        jffinished += 1
+                    start = i * spsize
 
-        print("Jellyfish filter: ",jffinished,'/',len(jffpbrunerlist), sep='')
+                    end = start + spsize - 1
 
-    jfpool.close()
+                    if end >= chrlen:
 
-    print('Jellyfish filter finished!!')
+                        end = chrlen - 1
+
+                    jffpbruner = jellyfish.JFfpbruner(jfpath=args.jellyfish, jfkmerfile=jfkmerfile, mer=kmer,
+                                                  pyfasta=fastain, seqname=seqname, pblength=args.length,
+                                                  maxkmerscore=maxkmerscore, start=start,
+                                                  end=end, step=step)
+
+                    jffpbrunerlist.append(jffpbruner)
+
+        jffinished = 0
+
+        print(len(jffpbrunerlist))
+
+        for curpblist in jfpool.imap_unordered(jellyfish.kmerfilterprobe, jffpbrunerlist):
+
+            jffilteredprobe.extend(curpblist)
+
+            jffinished += 1
+
+            print("Jellyfish filter: ",jffinished,'/',len(jffpbrunerlist), sep='')
+
+        jfpool.close()
+
+        print('Jellyfish filter finished!!')
+
+    else:
+
+        ### split fa file when geome size greater than 1 Gb
+
+        print("genome size > 1G")
+
+        subFas = spgenome.spgenome(args.input, args.saved)
+
+
+
+        for subFafile in subFas:
+            print(subFafile)
+            fastain = Fasta(subFafile)
+
+            jffpbrunerlist = list()
+
+            for seqname in fastain.keys():
+
+                chrlen = len(fastain[seqname])
+
+                if chrlen < spsize:
+
+                    start = 0
+
+                    end = chrlen - 1
+
+                    jffpbruner = jellyfish.JFfpbruner(jfpath=args.jellyfish, jfkmerfile=jfkmerfile, mer=kmer,
+                                                      pyfasta=fastain, seqname=seqname, pblength=args.length,
+                                                      maxkmerscore=maxkmerscore, start=start,
+                                                      end=end, step=step)
+
+                    jffpbrunerlist.append(jffpbruner)
+
+                else:
+
+                    chrblock = int(chrlen / spsize) + 1
+
+                    for i in range(chrblock):
+
+                        start = i * spsize
+
+                        end = start + spsize - 1
+
+                        if end >= chrlen:
+                            end = chrlen - 1
+
+                        jffpbruner = jellyfish.JFfpbruner(jfpath=args.jellyfish, jfkmerfile=jfkmerfile, mer=kmer,
+                                                          pyfasta=fastain, seqname=seqname, pblength=args.length,
+                                                          maxkmerscore=maxkmerscore, start=start,
+                                                          end=end, step=step)
+
+                        jffpbrunerlist.append(jffpbruner)
+
+            jffinished = 0
+
+            print(len(jffpbrunerlist))
+
+            for curpblist in jfpool.imap_unordered(jellyfish.kmerfilterprobe, jffpbrunerlist):
+                jffilteredprobe.extend(curpblist)
+
+                jffinished += 1
+
+                print(subFafile + " Jellyfish filter: ", jffinished, '/', len(jffpbrunerlist), sep='')
+
+
+        jfpool.close()
+
+        print('Jellyfish filter finished!!')
+
 
     tmppbfa = os.path.join(args.saved, os.path.basename(args.input)+'_tmp_probe.fa')
 
