@@ -33,7 +33,7 @@ def main():
 
     step = args.step
 
-    maxkmerscore = int(args.length * args.homology / 100) - kmer
+    maxkmerscore = int(((args.length * args.homology / 100) - kmer) * args.ploidy/2 + 0.5 )
 
     jfpool = Pool(args.threads)
 
@@ -699,6 +699,8 @@ def get_options():
     parser.add_argument('--step', dest='step', help='step length, min=1', default=5, type=int)
 
     parser.add_argument('--docker', default=False)
+
+    parser.add_argument('--ploidy', dest='ploidy', default=2, type=int, heop='set ploidy (test version)')
     # parser.parse_args(['--version'])
     # args = parser.parse_args()
 
