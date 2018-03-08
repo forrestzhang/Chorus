@@ -325,6 +325,7 @@ def stop_jellyfish(p=None):
             # time.sleep(1)
 
 
+
 def jfseqkmercount(jfpath, jfkmerfile, mer, sequence, bfcount=False):
 
     """
@@ -391,6 +392,64 @@ def jfseqkmercount(jfpath, jfkmerfile, mer, sequence, bfcount=False):
 
     return jfkmercount
 
+
+def jfseqkmercountforfilter(jfpath, jfkmerfile, mer, sequence, bfcount=False):
+
+    """
+    :param jfpath: jellyfish bin path
+    :param jfkmerfile: jellyfish kmer count file
+    :param mer: int, kmer
+    :param sequence: string, sequence for kmerscore count
+    :param bfcount:
+    :return: list, kmerscore list
+    """
+
+    seqlen = len(sequence)
+
+    jfpath = subprocesspath.subprocesspath(jfpath)
+
+    jfkmerfile = subprocesspath.subprocesspath(jfkmerfile)
+
+    jfquerycommand = ' '.join([jfpath, 'query', '-i', '-l', jfkmerfile])
+
+    print(jfquerycommand)
+
+    kmerct = subprocess.Popen(jfquerycommand, shell=True, stdout=subprocess.PIPE,
+                              stdin=subprocess.PIPE)
+
+
+    mer = int(mer)
+
+    end = mer
+
+    jfkmercount = list()
+
+    while (end <= seqlen):
+
+        start = end - mer
+
+        subseq = sequence[start:end]+'\n'
+
+        kmerct.stdin.write(subseq.encode('ascii'))
+
+        kmerct.stdin.flush()
+
+        lin = kmerct.stdout.readline().decode('utf-8').rstrip('\n')
+
+        number = int(lin)
+
+        jfkmercount.append(number)
+        end += 1
+
+    kmerct.stdin.close()
+
+    kmerct.stdout.close()
+
+    # kmerct.terminate()
+
+    kmerct.wait()
+
+    return jfkmercount
 
 # def kmerfilterprobe(jfpath, jfkmerfile, mer, sequence, pblength, maxkmerscore, step=4, bfcount=False):
 def kmerfilterprobe(jffpbruner):

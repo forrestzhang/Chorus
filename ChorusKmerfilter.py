@@ -14,44 +14,84 @@ def main():
 
     probelist = list()
 
-    with open(args.input, 'r') as probein:
-        for i in probein:
-
-            jfpbkfruner = jellyfish.JFpbkfruner(jfpath=args.jellyfish, jfkmerfile=args.kmerfile,mink=args.mink, maxk=args.maxk, mer=args.kmer, probe=i.strip('\n'))
-
-            probelist.append(jfpbkfruner)
-
-    probein.close()
-
+    # with open(args.input, 'r') as probein:
+    #     for i in probein:
+    #
+            # jfpbkfruner = jellyfish.JFpbkfruner(jfpath=args.jellyfish, jfkmerfile=args.kmerfile,mink=args.mink, maxk=args.maxk, mer=args.kmer, probe=i.strip('\n'))
+    #
+    #         probelist.append(jfpbkfruner)
+    #
+    # probein.close()
+    #
     dirout = os.path.dirname(args.input)
-
+    #
     basename = os.path.basename(args.input)
-
+    #
     outfilename = os.path.join( dirout,'kmerfilted_'+basename)
 
     probeout = open(outfilename, 'w')
+    #
+    # totalpb = len(probelist)
+    #
+    # nowpb = 0
+    #
+    # for currentprobe in jfpool.imap_unordered(jellyfish.jfprobekmerfilter, probelist):
+    #
+    #     nowpb += 1
+    #
+    #     print(currentprobe['chro'] ,
+    #             currentprobe['start'] ,
+    #             currentprobe['end'] ,
+    #             currentprobe['seq'] ,
+    #             currentprobe['keep'] ,
+    #             currentprobe['sumscore'],file=probeout,sep='\t')
+    #
+    #     if nowpb % 1000 == 0:
+    #
+    #         print(nowpb, "/", totalpb, sep='')
+    #
+    # probeout.close()
 
-    totalpb = len(probelist)
+    pseodu = ''
 
-    nowpb = 0
+    probes = list()
 
-    for currentprobe in jfpool.imap_unordered(jellyfish.jfprobekmerfilter, probelist):
+    probelen = args.probelen
 
-        nowpb += 1
+    with open(args.input, 'r') as probein:
 
-        print(currentprobe['chro'] ,
-                currentprobe['start'] ,
-                currentprobe['end'] ,
-                currentprobe['seq'] ,
-                currentprobe['keep'] ,
-                currentprobe['sumscore'],file=probeout,sep='\t')
+        for i in probein:
 
-        if nowpb % 1000 == 0:
+            probe = i.rstrip('\n')
 
-            print(nowpb, "/", totalpb, sep='')
+            infor = probe.split('\t')
 
-    probeout.close()
+            probes.append(probe)
 
+            pseodu = pseodu+infor[-1]
+
+    socres = jellyfish.jfseqkmercountforfilter(jfpath=args.jellyfish, jfkmerfile=args.kmerfile, mer=args.kmer, sequence=pseodu)
+
+    print("score len:", len(socres), "pseodu len:", len(pseodu))
+
+    for j in range(0, len(probes)):
+
+        scstart = j*probelen
+
+        scend = (j+1)*probelen - args.kmer + 1
+
+        nowscore =  sum(socres[scstart:scend])
+
+        keep = True
+
+        if nowscore < args.mink:
+
+            keep = False
+
+        if nowscore > args.maxk:
+            keep = False
+
+        print(probes[j], nowscore,keep, sep='\t',file=probeout)
 
 
 def check_options(parser):
@@ -142,8 +182,8 @@ def get_options():
 
     parser.add_argument('-j', '--jellyfish', dest='jellyfish', help='jellyfish path')
 
-    parser.add_argument('-t', '--threads', dest='threads', help='threads number or how may cpu you wanna use',
-                        default=1, type=int)
+    # parser.add_argument('-t', '--threads', dest='threads', help='threads number or how may cpu you wanna use',
+    #                     default=1, type=int)
 
     parser.add_argument('-k', '--kmer', dest='kmer', help='kmer length',
                         default=17, type=int)
@@ -156,6 +196,9 @@ def get_options():
 
     parser.add_argument('-f', '--kmerfile', dest='kmerfile', help='kmer file',
                         required=True, type=str)
+
+    parser.add_argument('-p', '--probelen', dest='probelen', help='probe length', default=45,
+                        required=True, type=int)
 
     return parser
 
