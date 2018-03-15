@@ -24,5 +24,5 @@ Indices and tables
 * taozhang.org_
 
 .. _taozhang.org: http://taozhang.org
-.. _`Jiming Jiang's Lab`: http://jianglab.horticulture.wisc.edu/
+.. _`Jiming Jiang's Lab`: http://jianglab.plantbiology.msu.edu
 

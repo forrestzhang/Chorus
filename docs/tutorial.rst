@@ -179,7 +179,8 @@ Run chorus software
 
 .. code-block:: bash
 
-    $ python3 /opt/software/Chorus/Chorus.py -i TAIR10_chr_all.fas -g TAIR10_chr_all.fas -t 12 \
+    $ python3 /opt/software/Chorus/Chorus.py -i TAIR10_chr_all.fas \
+      -g TAIR10_chr_all.fas -t 12 \
       -j /opt/software/jellyfish/bin/jellyfish -b /opt/software/bwa/bwa -s sample
 
 When job finish, the oligo probes will output to 'sample' folder 

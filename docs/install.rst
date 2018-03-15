@@ -17,7 +17,8 @@ Download Chorus:
 
     $ docker pull forrestzhang/docker-chorus
 
-    $ docker run -v $PWD:/home/chorus -e CHORUS_USER=$USER -e CHORUS_UID=$UID forrestzhang/docker-chorus -h
+    $ docker run -v $PWD:/home/chorus -e CHORUS_USER=$USER \
+      -e CHORUS_UID=$UID forrestzhang/docker-chorus -h
 
     usage: Chorus [-h] [--version] [-j JELLYFISH] [-b BWA] -g GENOME -i INPUT
               [-s SAVED] [-p PRIMER] [-t THREADS] [-l LENGTH]
