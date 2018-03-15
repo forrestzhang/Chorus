@@ -597,7 +597,7 @@ def get_options():
 
     parser = argparse.ArgumentParser(description="Chorus Software for Oligo FISH probe design", prog='Chorus')
 
-    parser.add_argument('--version', action='version', version='%(prog)s 1.0')
+    parser.add_argument('--version', action='version', version='%(prog)s 1.1')
 
     parser.add_argument('-j', '--jellyfish', dest='jellyfish', help='jellyfish path')
 
