@@ -133,7 +133,7 @@ Make a project folder
     $ mkdir sampleproject
     $ cd sampleproject
 
-Download reference genome
+Download Arabidopsis reference genome
 
 .. code-block:: bash
 
