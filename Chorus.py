@@ -700,7 +700,7 @@ def get_options():
 
     parser.add_argument('--docker', default=False)
 
-    parser.add_argument('--ploidy', dest='ploidy', default=2, type=int, heop='set ploidy (test version)')
+    parser.add_argument('--ploidy', dest='ploidy', default=2, type=int, help='set ploidy (test version)')
     # parser.parse_args(['--version'])
     # args = parser.parse_args()
 
