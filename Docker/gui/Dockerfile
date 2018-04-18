@@ -48,4 +48,6 @@ RUN echo "/opt/conda/bin/python /opt/software/Chorus/ChorusGUI.py" > /root/Deskt
 RUN echo "/opt/conda/bin/python /opt/software/Chorus/ChorusPBselect.py" > /root/Desktop/ChorusPBselect.sh
 RUN chmod +x /root/Desktop/ChorusGUI.sh /root/Desktop/ChorusPBselect.sh
 
-ENV PATH /opt/conda/bin:$PATH
+ENV PATH $PATH:/opt/conda/bin
+VOLUME /root/Desktop/Data
+ENTRYPOINT ["/startup.sh"]
