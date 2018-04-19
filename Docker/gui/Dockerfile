@@ -28,13 +28,13 @@ RUN /opt/conda/bin/conda config --add channels defaults && \
     /opt/conda/bin/conda config --add channels conda-forge && \
     /opt/conda/bin/conda config --add channels bioconda && \
     /opt/conda/bin/conda update -y -n base conda && \
-    /opt/conda/bin/conda install -y matplotlib pyfasta pysam pyqt jellyfish bwa pandas pip
+    /opt/conda/bin/conda install -y matplotlib pyfasta pysam pyqt jellyfish bwa pandas pip primer3-py git
 
-RUN apt-get install -y build-essential git
+# RUN apt-get install -y build-essential git
 
-RUN  /opt/conda/bin/pip install primer3-py
+# RUN  /opt/conda/bin/pip install primer3-py
 
-
+ENV PATH $PATH:/opt/conda/bin
 RUN mkdir /opt/software
 WORKDIR /opt/software
 RUN git clone https://github.com/forrestzhang/Chorus.git
@@ -48,6 +48,6 @@ RUN echo "/opt/conda/bin/python /opt/software/Chorus/ChorusGUI.py" > /root/Deskt
 RUN echo "/opt/conda/bin/python /opt/software/Chorus/ChorusPBselect.py" > /root/Desktop/ChorusPBselect.sh
 RUN chmod +x /root/Desktop/ChorusGUI.sh /root/Desktop/ChorusPBselect.sh
 
-ENV PATH $PATH:/opt/conda/bin
+
 VOLUME /root/Desktop/Data
 ENTRYPOINT ["/startup.sh"]
