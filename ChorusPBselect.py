@@ -40,6 +40,26 @@ class DesMainWD(QtWidgets.QMainWindow, Ui_MainWindow):
 
         self.pushButton_saveprobe.clicked.connect(self.saveProbe)
 
+        self.horizontalSlider_start.setEnabled(False)
+
+        self.horizontalSlider_end.setEnabled(False)
+
+        self.spinBox_start.setEnabled(False)
+
+        self.spinBox_end.setEnabled(False)
+
+        self.pushButton_loadchr.setEnabled(False)
+
+        self.pushButton_addpb.setEnabled(False)
+
+        self.pushButton_delete.setEnabled(False)
+
+        self.pushButton_show.setEnabled(False)
+
+        self.pushButton_projectdir.setEnabled(False)
+
+        self.pushButton_saveprobe.setEnabled(False)
+
         self.sortedperkbcount = object()
 
     def loadProbe(self):
@@ -147,7 +167,27 @@ class DesMainWD(QtWidgets.QMainWindow, Ui_MainWindow):
 
                     self.shortchr.append(chro)
 
+        self.pushButton_loadchr.setEnabled(True)
+
     def draw_graph(self):
+
+        self.horizontalSlider_start.setEnabled(True)
+
+        self.horizontalSlider_end.setEnabled(True)
+
+        self.spinBox_start.setEnabled(True)
+
+        self.spinBox_end.setEnabled(True)
+
+        self.pushButton_addpb.setEnabled(True)
+
+        self.pushButton_delete.setEnabled(True)
+
+        self.pushButton_show.setEnabled(True)
+
+        self.pushButton_projectdir.setEnabled(True)
+
+        self.pushButton_saveprobe.setEnabled(True)
 
         self.nowprobe = self.probes[self.probes.Chr == self.currentChr]
 
@@ -177,7 +217,8 @@ class DesMainWD(QtWidgets.QMainWindow, Ui_MainWindow):
 
         self.widget.canvas.ax2.clear()
 
-        self.widget.canvas.ax1.plot(pd.rolling_mean(self.sortedperkbcount.Kb,100))
+        # self.widget.canvas.ax1.plot(pd.rolling_mean(self.sortedperkbcount.Kb,100))
+        self.widget.canvas.ax1.plot(self.sortedperkbcount.Kb.rolling(window=100,center=False).mean())
 
         self.widget.canvas.ax1.set_xlim(0, self.chrlenkb[self.currentChr])
 
@@ -210,7 +251,9 @@ class DesMainWD(QtWidgets.QMainWindow, Ui_MainWindow):
 
         self.widget.canvas.ax1.set_title(self.currentChr)
 
-        self.widget.canvas.ax1.plot(pd.rolling_mean(self.sortedperkbcount.Kb,100))
+        # self.widget.canvas.ax1.plot(pd.rolling_mean(self.sortedperkbcount.Kb,100))
+
+        self.widget.canvas.ax1.plot(self.sortedperkbcount.Kb.rolling(window=100, center=False).mean())
 
         self.widget.canvas.ax1.axvspan(self.spinBox_start.value(), self.spinBox_end.value(), facecolor=self.comboBox_color.currentText(), alpha=0.5)
 
@@ -284,7 +327,8 @@ class DesMainWD(QtWidgets.QMainWindow, Ui_MainWindow):
 
         self.widget.canvas.ax1.set_title(self.currentChr)
 
-        self.widget.canvas.ax1.plot(pd.rolling_mean(self.sortedperkbcount.Kb,100))
+        # self.widget.canvas.ax1.plot(pd.rolling_mean(self.sortedperkbcount.Kb,100))
+        self.widget.canvas.ax1.plot(self.sortedperkbcount.Kb.rolling(window=100, center=False).mean())
 
         self.widget.canvas.ax1.set_xlim(0, self.chrlenkb[self.currentChr])
 
@@ -351,7 +395,10 @@ class DesMainWD(QtWidgets.QMainWindow, Ui_MainWindow):
 
         self.widget_OV.canvas.ax.clear()
 
-        self.widget_OV.canvas.ax.plot(pd.rolling_mean(self.sortedperkbcount.Kb,100))
+        # self.widget_OV.canvas.ax.plot(pd.rolling_mean(self.sortedperkbcount.Kb,100))
+
+        self.widget_OV.canvas.ax.plot(self.sortedperkbcount.Kb.rolling(window=100, center=False).mean())
+
 
         rowcount = self.tableWidget.rowCount()
 
