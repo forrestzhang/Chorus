@@ -662,7 +662,7 @@ class RunChorus(QtCore.QThread):
             jffinished += 1
 
 
-        self.notifyMessage.emit('jelly fish finished!!')
+        self.notifyMessage.emit('kmer filter finished!!')
 
         self.progressnumber = 50.0
 
