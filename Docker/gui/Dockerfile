@@ -37,7 +37,7 @@ RUN /opt/conda/bin/conda config --add channels defaults && \
 ENV PATH $PATH:/opt/conda/bin
 RUN mkdir /opt/software
 WORKDIR /opt/software
-RUN git clone https://github.com/forrestzhang/Chorus.git
+RUN git clone -b GUIv2 https://github.com/forrestzhang/Chorus.git
 
 RUN echo "/opt/conda/bin/python /opt/software/Chorus/ChorusGUI.py" > /home/ubuntu/Desktop/ChorusGUI.sh
 RUN echo "/opt/conda/bin/python /opt/software/Chorus/ChorusPBselect.py" > /home/ubuntu/Desktop/ChorusPBselect.sh
