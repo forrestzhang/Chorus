@@ -1,7 +1,7 @@
 import sys
 import argparse
 import os
-
+from Choruslib.revcom import revcom
 
 def main():
 
@@ -160,11 +160,11 @@ def get_options():
     return parser
 
 
-def revcom(sequence):
-
-    revdic = {'A': 'T', 'T': 'A', 'C': 'G', 'G': 'C','a':'t','t':'a','c':'g','g':'c'}
-
-    return "".join([revdic[base] for base in reversed(sequence)])
+# def revcom(sequence):
+#
+#     revdic = {'A': 'T', 'T': 'A', 'C': 'G', 'G': 'C','a':'t','t':'a','c':'g','g':'c'}
+#
+#     return "".join([revdic[base] for base in reversed(sequence)])
 
 
 if __name__ == "__main__":

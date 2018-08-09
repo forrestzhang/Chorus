@@ -209,7 +209,7 @@ def get_options():
 
     parser.add_argument('--version', action='version', version='%(prog)s 1.0')
 
-    parser.add_argument('-i', '--input', dest='input', help='unfiltered prob file, generate by Chrus.', required=True)
+    parser.add_argument('-i', '--input', dest='input', help='unfiltered prob file, generate by Chorus.', required=True)
 
     parser.add_argument('-k', '--kmer', dest='kmerfile', help='kmerfile', required=True)
 

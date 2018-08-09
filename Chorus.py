@@ -4,7 +4,6 @@ from Choruslib import bwa
 from Choruslib import jellyfish
 from Choruslib import prefilter, primer3_filter, spgenome
 import os
-import os.path
 from multiprocessing import Pool
 from math import log
 from pyfasta import Fasta

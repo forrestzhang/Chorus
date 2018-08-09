@@ -5,6 +5,8 @@ from matplotlib.widgets import SpanSelector
 import pandas as pd
 import os
 from random import sample
+import matplotlib.ticker as ticker
+from Choruslib.revcom import revcom
 
 class DesMainWD(QtWidgets.QMainWindow, Ui_MainWindow):
 
@@ -64,17 +66,53 @@ class DesMainWD(QtWidgets.QMainWindow, Ui_MainWindow):
 
     def loadProbe(self):
 
+        self.minidistance = 45
+
         probefile, _ = QtWidgets.QFileDialog.getOpenFileName(self, "Choose Probe File:", filter="*.bed")
 
-        self.probefile = probefile
+        if probefile:
 
-        self.label_probefile.setText(self.probefile)
+            self.probefile = probefile
 
-        self.label_filename.setText(self.probefile)
+            self.label_probefile.setText(self.probefile)
+
+            self.label_filename.setText(self.probefile)
+
+            minidistance, okPressed = QtWidgets.QInputDialog.getInt(self,"Mini Distance", "Mini Distance Between Two Probes",
+                                                                    self.minidistance,0,100,1)
+
+            if okPressed:
+
+                self.minidistance = minidistance
+
+            else:
+
+                self.minidistance = 45
 
         #Load probe bed file as panda data format
         # self.probes = pd.read_table(self.probefile, names=("Chr","Start","End","Seq"))
-        self.probes = pd.read_table(self.probefile,  header=None)
+        #self.probes = pd.read_table(self.probefile,  header=None)
+
+        # self.minidistance = self.spinBox_minidistance.value()
+
+        self.spinBox_minidistance.setValue(self.minidistance)
+
+        self.spinBox_minidistance.setEnabled(False)
+
+        startbefore = 0
+        probelist = list()
+        with open(self.probefile) as inio:
+            for lin in inio:
+                infor = lin.rstrip().split('\t')
+                startnow = int(infor[1])
+                if startnow - startbefore > self.minidistance:
+                    probelist.append(infor)
+                    startbefore = startnow
+                if startnow - startbefore < 0:
+                    # print(infor)
+                    startbefore = startnow
+                    probelist.append(infor)
+        self.probes = pd.DataFrame(probelist)
 
         try:
 
@@ -103,6 +141,10 @@ class DesMainWD(QtWidgets.QMainWindow, Ui_MainWindow):
             pass
 
         self.probes.Chr = self.probes.Chr.astype(object)
+
+        self.probes.Start = self.probes.Start.astype(int)
+
+        self.probes.End = self.probes.End.astype(int)
 
         self.probes['Kb'] = (self.probes.Start/1000).astype('int')
 
@@ -224,6 +266,12 @@ class DesMainWD(QtWidgets.QMainWindow, Ui_MainWindow):
 
         self.widget.canvas.ax1.set_title(self.currentChr)
 
+        scarerange = range(0,self.chrlenkb[self.currentChr])
+
+        ticks_x = ticker.FuncFormatter(lambda scarerange, pos: '{0:g}M'.format(scarerange/1000))
+
+        self.widget.canvas.ax1.xaxis.set_major_formatter(ticks_x)
+
         self.widget.canvas.line2, = self.widget.canvas.ax2.plot(self.sortedperkbcount.Kb)
         # self.widget.canvas.ax2.plot(self.sortedperkbcount.Kb)
 
@@ -258,6 +306,12 @@ class DesMainWD(QtWidgets.QMainWindow, Ui_MainWindow):
         self.widget.canvas.ax1.axvspan(self.spinBox_start.value(), self.spinBox_end.value(), facecolor=self.comboBox_color.currentText(), alpha=0.5)
 
         self.widget.canvas.ax1.set_xlim(0, self.chrlenkb[self.currentChr])
+
+        scarerange = range(0,self.chrlenkb[self.currentChr])
+
+        ticks_x = ticker.FuncFormatter(lambda scarerange, pos: '{0:g}M'.format(scarerange/1000))
+
+        self.widget.canvas.ax1.xaxis.set_major_formatter(ticks_x)
 
         self.subplotprob = self.nowprobe[self.nowprobe.Kb > self.spinBox_start.value()]
 
@@ -332,6 +386,12 @@ class DesMainWD(QtWidgets.QMainWindow, Ui_MainWindow):
 
         self.widget.canvas.ax1.set_xlim(0, self.chrlenkb[self.currentChr])
 
+        scarerange = range(0,self.chrlenkb[self.currentChr])
+
+        ticks_x = ticker.FuncFormatter(lambda scarerange, pos: '{0:g}M'.format(scarerange/1000))
+
+        self.widget.canvas.ax1.xaxis.set_major_formatter(ticks_x)
+
         self.widget.canvas.ax1.axvspan(xmins, xmaxs, facecolor=self.comboBox_color.currentText(), alpha=0.5)
 
         regionlength = self.horizontalSlider_end.value() - self.horizontalSlider_start.value() + 1
@@ -361,14 +421,14 @@ class DesMainWD(QtWidgets.QMainWindow, Ui_MainWindow):
         itsp = QtWidgets.QTableWidgetItem(self.spinBox_pbnumber.text())
         itrgl = QtWidgets.QTableWidgetItem(str(self.selectedregionlength))
         itpbd = QtWidgets.QTableWidgetItem(str(pbd))
-
+        itstrand = QtWidgets.QTableWidgetItem(self.comboBox_strand.currentText())
 
 
         qcolor = QtGui.QColor(0,0,0)
 
-        if self.comboBox_color.currentText() == 'green':
+        if self.comboBox_color.currentText() == 'Green':
             qcolor = QtGui.QColor(0, 255,0)
-        if self.comboBox_color.currentText() == 'red':
+        if self.comboBox_color.currentText() == 'Red':
             qcolor = QtGui.QColor(255, 0,0)
 
         itcolor.setBackground(qcolor)
@@ -381,6 +441,7 @@ class DesMainWD(QtWidgets.QMainWindow, Ui_MainWindow):
         self.tableWidget.setItem(rowcount, 5, itsp)
         self.tableWidget.setItem(rowcount, 6, itrgl)
         self.tableWidget.setItem(rowcount, 7, itpbd)
+        self.tableWidget.setItem(rowcount, 8, itstrand)
 
     def del_probes(self):
 
@@ -468,6 +529,8 @@ class DesMainWD(QtWidgets.QMainWindow, Ui_MainWindow):
             #choosed probe number
             itsp = int(self.tableWidget.item(i,5).text())
 
+            itstrand = self.tableWidget.item(i,8).text()
+
             print(itsp)
 
             nowprobes = self.probes[self.probes.Chr==itchr]
@@ -489,6 +552,45 @@ class DesMainWD(QtWidgets.QMainWindow, Ui_MainWindow):
             outfilename = itcolor + '_' + itchr + '_' + str(itstart) + '_' + str(itend) + '.bed'
 
             absfile = os.path.join(self.projectdir, outfilename)
+
+            nowprobes['Length'] = nowprobes.Seq.map(len)
+
+            if itstrand == '-':
+
+                revcomseq = nowprobes.Seq.map(revcom)
+
+                nowprobes.Seq = revcomseq
+
+                nowprobes['Strand'] = ['-']*len(nowprobes.Seq)
+
+            if itstrand == '+':
+
+                nowprobes['Strand'] = ['+'] * len(nowprobes.Seq)
+
+            if itstrand == 'Both':
+
+                newseq = list()
+
+                starndlist = list()
+
+                strandnow = 0
+
+                for seq in nowprobes.Seq:
+
+                    # seq = nowprobes.iloc[idx].Seq
+                    #     print(idx, seq)
+                    if strandnow % 2 == 0:
+                        starndlist.append('+')
+                        newseq.append(seq)
+                    else:
+                        starndlist.append('-')
+                        newseq.append(revcom(seq))
+
+                    strandnow += 1
+
+                nowprobes.Seq = newseq
+
+                nowprobes['Strand'] = starndlist
 
             nowprobes.to_csv(path_or_buf=absfile, sep='\t', index = False, index_label= False, header=False)
 

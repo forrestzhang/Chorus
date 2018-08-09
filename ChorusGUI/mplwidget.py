@@ -15,11 +15,11 @@ class MplCanvas(FigureCanvas):
 
         self.ax1 = self.fig.add_subplot(211)
 
-        self.ax1.set_title("Whole Chr")
+        self.ax1.set_title("Whole Chr (Mb)")
 
         self.ax2 = self.fig.add_subplot(212)
 
-        self.ax2.set_title("Zoom in Region")
+        self.ax2.set_title("Zoom in Region (Kb)")
 
         self.line2 = object()
 
