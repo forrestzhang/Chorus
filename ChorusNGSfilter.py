@@ -24,8 +24,8 @@ def main():
 
     outfilename = args.output
 
-    jellyfish.jfgeneratorscount(jfpath=args.jellyfish, mer=args.kmer, output=jfkmerfile,
-                                generators='generators',threads=args.threads,  size='100M')
+    # jellyfish.jfgeneratorscount(jfpath=args.jellyfish, mer=args.kmer, output=jfkmerfile,
+    #                             generators='generators',threads=args.threads,  size='100M')
 
     spsize = 10000000
 
@@ -57,7 +57,7 @@ def main():
 
             end = chrlen - 1
 
-            jfscoer = jellyfish.JFNGSScoer(jfpath=args.jfpath, jfkmerfile=jfkmerfile, mer=args.kmer,
+            jfscoer = jellyfish.JFNGSScoer(jfpath=args.jellyfish, jfkmerfile=jfkmerfile, mer=args.kmer,
                                            start=start, end=end, seqfullname=seqfullname, pyfasta=fastain)
 
             jfscoer = jellyfish.jfngsscoer(jfscoer)
@@ -82,7 +82,7 @@ def main():
                 if end >= chrlen:
                     end = chrlen - 1
 
-                jfscoer = jellyfish.JFNGSScoer(jfpath=args.jfpath, jfkmerfile=jfkmerfile, mer=args.kmer,
+                jfscoer = jellyfish.JFNGSScoer(jfpath=args.jellyfish, jfkmerfile=jfkmerfile, mer=args.kmer,
                                                start=start, end=end, seqfullname=seqfullname, pyfasta=fastain)
                 jfscoerlist.append(jfscoer)
 
@@ -228,7 +228,7 @@ def get_options():
 
     parser.add_argument('-z', '--gziped', dest='gzip', help='gziped file or not, gz or text', default='gz', required=True)
 
-    parser.add_argument('-s', '--save', dest='saved', help='result saved folder', default='probes')
+    # parser.add_argument('-s', '--save', dest='saved', help='result saved folder', default='probes')
 
     parser.add_argument('-t', '--threads', dest='threads', help='threads number or how may cpu you wanna use',
                         default=1, type=int)
