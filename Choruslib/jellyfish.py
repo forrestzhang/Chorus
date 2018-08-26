@@ -65,6 +65,48 @@ def jfcount(jfpath, mer, output, infile,threads=1,  size='100M', lowercount=2):
 #../jellyfish/x86_64-Darwin/bin/jellyfish count  -m 32 -s 100M -t 4 --bc Zea_mays_32mer.bc -L 2 -o Zea_mays_32mer_L2.jf  ../TestData/Zea_mays.AGPv3.23.dna.genome.fa
 
 
+def jfgeneratorscount(jfpath, mer, output, generators,threads=1,  size='100M'):
+    """
+    :param jfpath:
+    :param mer:
+    :param output:
+    :param infile:
+    :param threads:
+    :param size:
+    :param lowercount:
+    :return:
+    """
+
+    jfpath = subprocesspath.subprocesspath(jfpath)
+
+    output = subprocesspath.subprocesspath(output)
+
+    generators = subprocesspath.subprocesspath(generators)
+
+    jfcountcommand = ' '.join([jfpath, 'count', '--canonical', '-m', str(mer), '-g', generators,
+                               '-t', str(threads), '-o', str(output),  '-s', str(size)])
+
+    print(jfcountcommand)
+
+    p = subprocess.Popen(jfcountcommand, shell=True)
+
+    try:
+
+        outs, errs = p.communicate()
+
+        return True
+
+    except Exception:
+
+        p.kill()
+
+        outs, errs = p.communicate()
+
+        print("Something wrong in jellyfish count")
+
+        return False
+
+
 def jfcountbf(jfpath, mer,  output, infile, threads=1,  size='100M', bfsize="1G", lowercount=1):
 
     '''
@@ -391,6 +433,34 @@ def jfseqkmercount(jfpath, jfkmerfile, mer, sequence, bfcount=False):
     kmerct.wait()
 
     return jfkmercount
+
+
+def makegenerator(filenames, type='gz',generators='generators'):
+    """
+
+    :param filenames:
+    :return:
+    """
+
+    generatorsio = open(generators,'w')
+
+    if type == 'gz':
+
+        for filename in filenames:
+
+            fileabpath = path.abspath(filename)
+
+            print('gunzip -c', fileabpath, file=generatorsio)
+
+    if type =='text':
+
+        for filename in filenames:
+
+            fileabpath = path.abspath(filename)
+
+            print('cat', fileabpath, file=generatorsio)
+
+    generatorsio.close()
 
 
 def jfseqkmercountforfilter(jfpath, jfkmerfile, mer, sequence, bfcount=False):
