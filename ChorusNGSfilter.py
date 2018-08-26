@@ -24,8 +24,8 @@ def main():
 
     outfilename = args.output
 
-    # jellyfish.jfgeneratorscount(jfpath=args.jellyfish, mer=args.kmer, output=jfkmerfile,
-    #                             generators='generators',threads=args.threads,  size='100M')
+    jellyfish.jfgeneratorscount(jfpath=args.jellyfish, mer=args.kmer, output=jfkmerfile,
+                                generators='generators',threads=args.threads,  size='100M')
 
     spsize = 10000000
 
@@ -101,7 +101,7 @@ def main():
     with open(args.probe) as inio:
         for i in inio:
             (chrom, start, end, seq) = i.rstrip().split()
-            score = sum(bw.values(chrom, int(start) - 1, int(end) - 16))
+            score = sum(bwforcount.values(chrom, int(start) - 1, int(end) - 16))
             print(chrom, start, end, seq, int(score), '+', sep='\t', file=outio)
     outio.close()
 
