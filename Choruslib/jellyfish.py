@@ -578,6 +578,79 @@ def jfprobekmerfilter(jfpbkfruner):
     return jfprobefileter
 
 
+def jfseqNGSkmer(jfpath, jfkmerfile, mer, sequence, bfcount=False):
+
+    """
+    :param jfpath: jellyfish bin path
+    :param jfkmerfile: jellyfish kmer count file
+    :param mer: int, kmer
+    :param sequence: string, sequence for kmerscore count
+    :param bfcount:
+    :return: list, kmerscore list
+    """
+
+    seqlen = len(sequence)
+
+    jfpath = subprocesspath.subprocesspath(jfpath)
+
+    jfkmerfile = subprocesspath.subprocesspath(jfkmerfile)
+
+    jfquerycommand = ' '.join([jfpath, 'query', '-i', '-l', jfkmerfile])
+
+    print(jfquerycommand)
+
+    kmerct = subprocess.Popen(jfquerycommand, shell=True, stdout=subprocess.PIPE,
+                              stdin=subprocess.PIPE)
+
+
+    mer = int(mer)
+
+    end = mer
+
+    jfkmercount = list()
+
+    while (end <= seqlen):
+
+        start = end - mer
+
+        subseq = sequence[start:end]+'\n'
+
+        kmerct.stdin.write(subseq.encode('ascii'))
+
+        kmerct.stdin.flush()
+
+        lin = kmerct.stdout.readline().decode('utf-8').rstrip('\n')
+
+        number = int(lin)
+
+        jfkmercount.append(number)
+        end += 1
+
+    kmerct.stdin.close()
+
+    kmerct.stdout.close()
+
+    kmerct.wait()
+
+    return jfkmercount
+
+
+def jfngsscoer(jfngsscoer):
+
+    """
+    :param jfngsscoer: JFNGSScoer without score
+    :return:  jfngsscoer with score
+    """
+
+    sequence = jfngsscoer.pyfasta[jfngsscoer.seqfullname][jfngsscoer.start:jfngsscoer.end]
+
+    print("NGS scorer ", jfngsscoer.seqname+":"+str(jfngsscoer.start)+':'+str(jfngsscoer.end))
+
+    jfngsscoer.score = list(map(float,jfseqNGSkmer(jfngsscoer.jfpath, jfngsscoer.jfkmerfile, jfngsscoer.mer, sequence)))
+
+    return jfngsscoer
+
+
 
 class JFfpbruner():
 
@@ -621,6 +694,28 @@ class JFpbkfruner():
 
         self.mink = mink
 
+
+class JFNGSScoer():
+
+    def __init__(self, jfpath, pyfasta, jfkmerfile, mer, seqfullname, start, end):
+        self.jfpath = jfpath
+
+        self.jfkmerfile = jfkmerfile
+
+        self.mer = mer
+
+        self.pyfasta = pyfasta
+
+        self.seqfullname = seqfullname
+
+        self.start = start
+
+        self.end = end
+
+        # convert name like '10 dna:chromosome chromosome:AGPv3:10:1:149632204:1' to '10'
+        self.seqname = seqfullname.split()[0]
+
+        self.score = list()
 
 
 if __name__ == '__main__':

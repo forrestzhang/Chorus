@@ -56,7 +56,7 @@ Download Chorus:
 
     $ docker pull forrestzhang/chorus-gui
 
-    $ docker run -i -t -p 6080:6080 -v $PWD:/home/ubuntu/Data forrestzhang/chorus-gui
+    $ docker run -i -t -p 6080:80 -v $PWD:/root/Desktop/Data forrestzhang/chorus-gui
 
 Open your web browse, enter http://localhost:6080
 

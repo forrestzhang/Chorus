@@ -18,13 +18,10 @@ RUN mkdir -p /home/ubuntu/Desktop
 
 RUN ln -s /opt/conda/etc/profile.d/conda.sh /etc/profile.d/conda.sh && \
     echo ". /opt/conda/etc/profile.d/conda.sh" >> ~/.bashrc && \
-    echo "conda activate base" >> ~/.bashrc
-
-
-RUN echo ". /opt/conda/etc/profile.d/conda.sh" >> /root/.bashrc && \
-    echo "conda activate base" >> /root/.bashrc
-
-RUN /opt/conda/bin/conda config --add channels defaults && \
+    echo "conda activate base" >> ~/.bashrc && \
+    echo ". /opt/conda/etc/profile.d/conda.sh" >> /root/.bashrc && \
+    echo "conda activate base" >> /root/.bashrc &&\
+    /opt/conda/bin/conda config --add channels defaults && \
     /opt/conda/bin/conda config --add channels conda-forge && \
     /opt/conda/bin/conda config --add channels bioconda && \
     /opt/conda/bin/conda update -y -n base conda && \
