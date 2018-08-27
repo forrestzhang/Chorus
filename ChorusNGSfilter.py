@@ -24,8 +24,8 @@ def main():
 
     outfilename = args.output
 
-    jellyfish.jfgeneratorscount(jfpath=args.jellyfish, mer=args.kmer, output=jfkmerfile,
-                                generators='generators',threads=args.threads,  size='100M')
+    # jellyfish.jfgeneratorscount(jfpath=args.jellyfish, mer=args.kmer, output=jfkmerfile,
+    #                             generators='generators',threads=args.threads,  size='100M')
 
     spsize = 10000000
 
