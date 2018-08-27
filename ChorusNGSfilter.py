@@ -24,8 +24,8 @@ def main():
 
     outfilename = args.output
 
-    # jellyfish.jfgeneratorscount(jfpath=args.jellyfish, mer=args.kmer, output=jfkmerfile,
-    #                             generators='generators',threads=args.threads,  size='100M')
+    jellyfish.jfgeneratorscount(jfpath=args.jellyfish, mer=args.kmer, output=jfkmerfile,
+                                generators='generators',threads=args.threads,  size='100M')
 
     spsize = 5000000
 
@@ -45,7 +45,7 @@ def main():
 
     jfscoerlist = list()
 
-    
+
 
     for seqfullname in sorted(fastain.keys()):
 
@@ -61,10 +61,6 @@ def main():
 
             jfscoer = jellyfish.JFNGSScoer(jfpath=args.jellyfish, jfkmerfile=jfkmerfile, mer=args.kmer,
                                            start=start, end=end, seqfullname=seqfullname, pyfasta=fastain)
-
-            # jfscoer = jellyfish.jfngsscoer(jfscoer)
-
-            #         bw.addEntries(jfscoer.seqname,jfscoer.start,values=jfscoer.score,span=1,step=1)
 
             jfscoerlist.append(jfscoer)
 
@@ -87,38 +83,6 @@ def main():
                 jfscoer = jellyfish.JFNGSScoer(jfpath=args.jellyfish, jfkmerfile=jfkmerfile, mer=args.kmer,
                                                start=start, end=end, seqfullname=seqfullname, pyfasta=fastain)
                 jfscoerlist.append(jfscoer)
-                
-                
-
-
-    # for seqfullname in sorted(fastain.keys()):
-    #
-    #     infor = seqfullname.split()
-    #
-    #     chrlen = len(fastain[seqfullname])
-    #
-    #     if chrlen > spsize:
-    #
-    #         start = 0
-    #
-    #         end = chrlen - 1
-    #
-    #         jfscoer = jellyfish.JFNGSScoer(jfpath=args.jellyfish, jfkmerfile=jfkmerfile, mer=args.kmer,
-    #                                        start=start, end=end, seqfullname=seqfullname, pyfasta=fastain)
-    #
-    #         jfscoer = jellyfish.jfngsscoer(jfscoer)
-    #
-    #         bw.addEntries(jfscoer.seqname,jfscoer.start,values=jfscoer.score,span=1,step=1)
-    #
-    #     else:
-    #
-    #         start = 0
-    #
-    #         end = chrlen - 1
-    #
-    #         jfscoer = jellyfish.JFNGSScoer(jfpath=args.jellyfish, jfkmerfile=jfkmerfile, mer=args.kmer,
-    #                                            start=start, end=end, seqfullname=seqfullname, pyfasta=fastain)
-    #         jfscoerlist.append(jfscoer)
 
     jfsllength = int(len(jfscoerlist)/args.threads + 1)
 
@@ -144,19 +108,6 @@ def main():
 
     bw.close()
 
-
-    # pool = Pool(args.threads)
-    #
-    # for jfscoer in pool.map(jellyfish.jfngsscoer, jfscoerlist):
-    #
-    #     bw.addEntries(jfscoer.seqname, jfscoer.start, values=jfscoer.score, span=1, step=1)
-    #
-    #     print(jfscoer.seqname, jfscoer.start, 'OK')
-    #
-    # bw.close()
-    #
-    # pool.close()
-
     bwforcount = pyBigWig.open(bwfile)
 
 
@@ -167,7 +118,16 @@ def main():
 
         for i in inio:
 
-            (chrom, start, end, seq) = i.rstrip().split()
+            #(chrom, start, end, seq) = i.rstrip().split()
+            probeloc = i.rstrip().split()
+
+            chrom = probeloc[0]
+
+            start = probeloc[1]
+
+            end = probeloc[2]
+
+            seq = probeloc[3]
 
             score = sum(bwforcount.values(chrom, int(start) - 1, int(end) - args.kmer))
 
