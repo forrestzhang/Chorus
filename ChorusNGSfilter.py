@@ -3,7 +3,7 @@ import sys
 from Choruslib import jellyfish
 import os
 from multiprocessing import Pool
-from pyfasta import Fasta
+from pyfaidx import Fasta
 import pyBigWig
 
 def main():
@@ -135,7 +135,7 @@ def main():
 
             (chrom, start, end, seq) = i.rstrip().split()
 
-            score = sum(bwforcount.values(chrom, int(start) - 1, int(end) - 16))
+            score = sum(bwforcount.values(chrom, int(start) - 1, int(end) - args.kmer-1))
 
             print(chrom, start, end, seq, int(score), '+', sep='\t', file=outio)
 

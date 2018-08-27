@@ -6,7 +6,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 import time
 import platform
 from math import log
-from pyfasta import Fasta
+from pyfaidx import Fasta
 from multiprocessing import Pool
 from Choruslib import bwa
 from Choruslib import jellyfish

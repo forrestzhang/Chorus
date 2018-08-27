@@ -6,7 +6,7 @@ from Choruslib import prefilter, primer3_filter, spgenome
 import os
 from multiprocessing import Pool
 from math import log
-from pyfasta import Fasta
+from pyfaidx import Fasta
 
 
 def main():

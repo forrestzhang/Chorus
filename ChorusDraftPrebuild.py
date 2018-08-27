@@ -1,4 +1,4 @@
-from pyfasta import Fasta
+from pyfaidx import Fasta
 import sys
 import argparse
 import os

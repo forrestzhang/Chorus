@@ -1,4 +1,4 @@
-from pyfasta import Fasta
+from pyfaidx import Fasta
 from os import path
 
 def spgenome(fafile, outdir, maxsize=1000000000):
