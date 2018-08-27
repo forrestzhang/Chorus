@@ -45,7 +45,7 @@ def main():
 
     jfscoerlist = list()
 
-    """
+    
 
     for seqfullname in sorted(fastain.keys()):
 
@@ -89,36 +89,36 @@ def main():
                 jfscoerlist.append(jfscoer)
                 
                 
-    """
 
-    for seqfullname in sorted(fastain.keys()):
 
-        infor = seqfullname.split()
-
-        chrlen = len(fastain[seqfullname])
-
-        if chrlen > spsize:
-
-            start = 0
-
-            end = chrlen - 1
-
-            jfscoer = jellyfish.JFNGSScoer(jfpath=args.jellyfish, jfkmerfile=jfkmerfile, mer=args.kmer,
-                                           start=start, end=end, seqfullname=seqfullname, pyfasta=fastain)
-
-            jfscoer = jellyfish.jfngsscoer(jfscoer)
-
-            bw.addEntries(jfscoer.seqname,jfscoer.start,values=jfscoer.score,span=1,step=1)
-
-        else:
-
-            start = 0
-
-            end = chrlen - 1
-
-            jfscoer = jellyfish.JFNGSScoer(jfpath=args.jellyfish, jfkmerfile=jfkmerfile, mer=args.kmer,
-                                               start=start, end=end, seqfullname=seqfullname, pyfasta=fastain)
-            jfscoerlist.append(jfscoer)
+    # for seqfullname in sorted(fastain.keys()):
+    #
+    #     infor = seqfullname.split()
+    #
+    #     chrlen = len(fastain[seqfullname])
+    #
+    #     if chrlen > spsize:
+    #
+    #         start = 0
+    #
+    #         end = chrlen - 1
+    #
+    #         jfscoer = jellyfish.JFNGSScoer(jfpath=args.jellyfish, jfkmerfile=jfkmerfile, mer=args.kmer,
+    #                                        start=start, end=end, seqfullname=seqfullname, pyfasta=fastain)
+    #
+    #         jfscoer = jellyfish.jfngsscoer(jfscoer)
+    #
+    #         bw.addEntries(jfscoer.seqname,jfscoer.start,values=jfscoer.score,span=1,step=1)
+    #
+    #     else:
+    #
+    #         start = 0
+    #
+    #         end = chrlen - 1
+    #
+    #         jfscoer = jellyfish.JFNGSScoer(jfpath=args.jellyfish, jfkmerfile=jfkmerfile, mer=args.kmer,
+    #                                            start=start, end=end, seqfullname=seqfullname, pyfasta=fastain)
+    #         jfscoerlist.append(jfscoer)
 
     jfsllength = int(len(jfscoerlist)/args.threads + 1)
 
