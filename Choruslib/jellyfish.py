@@ -716,7 +716,7 @@ def jfngsscoer(jfngsscoer):
 
     print("NGS scorer ", jfngsscoer.seqname+":"+str(jfngsscoer.start)+':'+str(jfngsscoer.end))
 
-    jfngsscoer.score = list(map(float,jfseqNGSkmer(jfngsscoer.jfpath, jfngsscoer.jfkmerfile, jfngsscoer.mer, sequence)))
+    jfngsscoer.score = jfseqNGSkmer(jfngsscoer.jfpath, jfngsscoer.jfkmerfile, jfngsscoer.mer, sequence)
 
     return jfngsscoer
 

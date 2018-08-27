@@ -102,7 +102,7 @@ def main():
 
         for jfscoer in pool.map(jellyfish.jfngsscoer, nowlist):
 
-            bw.addEntries(jfscoer.seqname, jfscoer.start, values=jfscoer.score, span=1, step=1)
+            bw.addEntries(jfscoer.seqname, jfscoer.start, values=list(map(float,jfscoer.score)), span=1, step=1)
 
             print(jfscoer.seqname, jfscoer.start, 'OK')
 
