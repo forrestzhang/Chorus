@@ -52,11 +52,14 @@ def main():
 
     breacker = 'NNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNN'
 
+    shortlist = list()
+
     for chrome in fain.keys():
 
         if len(fain[chrome]) < minlen:
-            print(chrome, len(fain[chrome]))
-            shortseq = shortseq + str(fain[chrome]) + breacker
+            # print(chrome, len(fain[chrome]))
+            # shortseq = shortseq + str(fain[chrome]) + breacker
+            shortlist.append(chrome)
 
         else:
             print(chrome, len(fain[chrome]))
@@ -65,7 +68,11 @@ def main():
 
     print('>shortsequences', file=faout)
 
-    print(shortseq, file=faout)
+    for chrome in shortlist:
+
+        print(str(fain[chrome]),shortseq,sep='',end='', file=faout)
+
+#    print(shortseq, file=faout)
 
 
     faout.close()
