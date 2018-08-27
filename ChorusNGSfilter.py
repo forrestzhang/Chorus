@@ -35,7 +35,7 @@ def main():
 
     seqlenth = dict()
     seqname = dict()
-    pool = Pool(40)
+
     for chrom in sorted(fastain.keys()):
         infor = chrom.split()
         seqlenth[infor[0]] = len(fastain[chrom])
@@ -86,23 +86,44 @@ def main():
                                                start=start, end=end, seqfullname=seqfullname, pyfasta=fastain)
                 jfscoerlist.append(jfscoer)
 
-    for jfscoer in pool.map(jellyfish.jfngsscoer, jfscoerlist):
+    jfsllength = int(len(jfscoerlist)/args.threads + 1)
 
-        bw.addEntries(jfscoer.seqname, jfscoer.start, values=jfscoer.score, span=1, step=1)
+    for jt in range(jfsllength+1):
 
-        print(jfscoer.seqname, jfscoer.start, 'OK')
+        if jt == jfsllength:
 
-    bwforcount = pyBigWig.open(bwfile)
+            nowlist = jfscoerlist[jt*args.threads+1:]
+
+        else:
+
+            nowlist = jfscoerlist[jt * args.threads:((jt +1) * args.threads -1)]
+
+        pool = Pool(args.threads)
+
+        for jfscoer in pool.map(jellyfish.jfngsscoer, nowlist):
+
+            bw.addEntries(jfscoer.seqname, jfscoer.start, values=jfscoer.score, span=1, step=1)
+
+            print(jfscoer.seqname, jfscoer.start, 'OK')
+
+        pool.close()
+
+        bwforcount = pyBigWig.open(bwfile)
 
 
 
     outio = open(outfilename, 'w')
 
     with open(args.probe) as inio:
+
         for i in inio:
+
             (chrom, start, end, seq) = i.rstrip().split()
+
             score = sum(bwforcount.values(chrom, int(start) - 1, int(end) - 16))
+
             print(chrom, start, end, seq, int(score), '+', sep='\t', file=outio)
+
     outio.close()
 
     print("finished!")
