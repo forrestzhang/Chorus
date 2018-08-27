@@ -27,7 +27,7 @@ def main():
     # jellyfish.jfgeneratorscount(jfpath=args.jellyfish, mer=args.kmer, output=jfkmerfile,
     #                             generators='generators',threads=args.threads,  size='100M')
 
-    spsize = 1000000
+    spsize = 5000000
 
     fastain = Fasta(args.genome)
 
