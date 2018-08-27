@@ -1,4 +1,4 @@
-from pyfaidx import Fasta
+from pyfasta import Fasta
 
 
 def writebed(probelist, outbedfile):
