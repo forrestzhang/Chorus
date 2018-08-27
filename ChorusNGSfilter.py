@@ -85,7 +85,7 @@ def main():
                 jfscoer = jellyfish.JFNGSScoer(jfpath=args.jellyfish, jfkmerfile=jfkmerfile, mer=args.kmer,
                                                start=start, end=end, seqfullname=seqfullname, pyfasta=fastain)
                 jfscoerlist.append(jfscoer)
-
+    """
     jfsllength = int(len(jfscoerlist)/args.threads + 1)
 
     for jt in range(jfsllength+1):
@@ -107,8 +107,19 @@ def main():
             print(jfscoer.seqname, jfscoer.start, 'OK')
 
         pool.close()
+    """
+
+    pool = Pool(args.threads)
+
+    for jfscoer in pool.map(jellyfish.jfngsscoer, jfscoerlist):
+
+        bw.addEntries(jfscoer.seqname, jfscoer.start, values=jfscoer.score, span=1, step=1)
+
+        print(jfscoer.seqname, jfscoer.start, 'OK')
 
     bw.close()
+
+    pool.close()
 
     bwforcount = pyBigWig.open(bwfile)
 
