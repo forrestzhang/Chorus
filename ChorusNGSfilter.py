@@ -60,7 +60,7 @@ def main():
             jfscoer = jellyfish.JFNGSScoer(jfpath=args.jellyfish, jfkmerfile=jfkmerfile, mer=args.kmer,
                                            start=start, end=end, seqfullname=seqfullname, pyfasta=fastain)
 
-            jfscoer = jellyfish.jfngsscoer(jfscoer)
+            # jfscoer = jellyfish.jfngsscoer(jfscoer)
 
             #         bw.addEntries(jfscoer.seqname,jfscoer.start,values=jfscoer.score,span=1,step=1)
 
