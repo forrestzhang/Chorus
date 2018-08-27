@@ -108,7 +108,7 @@ def main():
 
         pool.close()
 
-        bw.close()
+    bw.close()
 
 
     # pool = Pool(args.threads)
