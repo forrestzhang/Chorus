@@ -88,15 +88,15 @@ def main():
 
     jfsllength = int(len(jfscoerlist)/args.threads + 1)
 
-    for jt in range(jfsllength+1):
+    for jt in range(jfsllength):
 
         if jt == jfsllength:
 
-            nowlist = jfscoerlist[jt*args.threads+1:]
+            nowlist = jfscoerlist[jt*args.threads:]
 
         else:
 
-            nowlist = jfscoerlist[jt * args.threads:((jt +1) * args.threads -1)]
+            nowlist = jfscoerlist[(jt * args.threads):((jt+1) * args.threads)]
 
         pool = Pool(args.threads)
 
