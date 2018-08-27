@@ -108,6 +108,8 @@ def main():
 
         pool.close()
 
+    bw.close()
+
     bwforcount = pyBigWig.open(bwfile)
 
 
