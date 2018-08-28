@@ -5,6 +5,7 @@ import os
 from multiprocessing import Pool
 from pyfasta import Fasta
 import pyBigWig
+import math
 
 def main():
 
@@ -130,6 +131,10 @@ def main():
             seq = probeloc[3]
 
             score = sum(bwforcount.values(chrom, int(start) - 1, int(end) - args.kmer))
+
+            if math.isnan(score):
+
+                score = 0
 
             print(chrom, start, end, seq, int(score), '+', sep='\t', file=outio)
 
