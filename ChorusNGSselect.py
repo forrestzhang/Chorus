@@ -134,7 +134,7 @@ def get_options():
     parser.add_argument('-q', '--minquantile', dest='minquantile', type=float,
                         help='filter < min\% score range from (0-1)', default=0.1)
 
-    parser.add_argument('-p', '--maxquantile', dest='minquantile', type=float,
+    parser.add_argument('-p', '--maxquantile', dest='maxquantile', type=float,
                         help='filter > max\% score range from (0-1)', default=0.9)
 
     parser.add_argument('-bs', '--bothstrand', dest='strand', help='use both + and - strand, default is True',
