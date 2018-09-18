@@ -2,7 +2,7 @@ import argparse
 import sys
 from Choruslib import jellyfish
 import os
-from multiprocessing import Pool
+from multiprocessing import Pool, Process
 from pyfasta import Fasta
 import pyBigWig
 import math
@@ -37,16 +37,22 @@ def main():
     seqlenth = dict()
     seqname = dict()
 
+    genomesize = 0
+
     for chrom in sorted(fastain.keys()):
         infor = chrom.split()
         seqlenth[infor[0]] = len(fastain[chrom])
         seqname[infor[0]] = chrom
+        genomesize += seqlenth[infor[0]]
 
+    print("Genome Size: %s" % genomesize)
     bw.addHeader(list(seqlenth.items()))
 
     jfscoerlist = list()
 
+    if genomesize > 2000000000:
 
+        spsize = 10000000
 
     for seqfullname in sorted(fastain.keys()):
 
@@ -85,29 +91,98 @@ def main():
                                                start=start, end=end, seqfullname=seqfullname, pyfasta=fastain)
                 jfscoerlist.append(jfscoer)
 
-    jfsllength = int(len(jfscoerlist)/args.threads + 1)
+    if genomesize < 2000000000:
 
-    for jt in range(jfsllength):
+        print("use small genome model")
 
-        if jt == jfsllength:
+        jfsllength = int(len(jfscoerlist)/args.threads + 1)
 
-            nowlist = jfscoerlist[jt*args.threads:]
+        for jt in range(jfsllength):
 
-        else:
+            if jt == jfsllength:
 
-            nowlist = jfscoerlist[(jt * args.threads):((jt+1) * args.threads)]
+                nowlist = jfscoerlist[jt*args.threads:]
 
-        pool = Pool(args.threads)
+            else:
 
-        for jfscoer in pool.map(jellyfish.jfngsscoer, nowlist):
+                nowlist = jfscoerlist[(jt * args.threads):((jt+1) * args.threads)]
 
-            bw.addEntries(jfscoer.seqname, jfscoer.start, values=list(map(float,jfscoer.score)), span=1, step=1)
+            pool = Pool(args.threads)
 
-            print(jfscoer.seqname, jfscoer.start, 'OK')
+            for jfscoer in pool.map(jellyfish.jfngsscoer, (nowlist, 1)):
 
-        pool.close()
+                bw.addEntries(jfscoer.seqname, jfscoer.start, values=list(map(float,jfscoer.score)), span=1, step=1)
+
+                print(jfscoer.seqname, jfscoer.start, 'OK')
+
+            pool.close()
+
+
+
+    else:
+
+        print("use large genome model")
+
+        tmppath = os.path.dirname(args.output)
+
+        jfsllength = int(len(jfscoerlist) / args.threads + 1)
+
+        for jt in range(jfsllength):
+
+            if jt == jfsllength:
+
+                nowlist = jfscoerlist[jt * args.threads:]
+
+            else:
+
+                nowlist = jfscoerlist[(jt * args.threads):((jt + 1) * args.threads)]
+
+            processes = list()
+
+            for jfscoer in nowlist:
+
+                p = Process(target=jellyfish.jfngsscoerlargegenome, args=(jfscoer,tmppath))
+
+                processes.append(p)
+
+            for p in processes:
+
+                p.start()
+
+            for p in processes:
+
+                p.join()
+            # jfngsscoerlargegenome
+
+            for jfscoer in nowlist:
+
+                tmpfile = jfscoer.seqname + '_' + str(jfscoer.start) + "_" + str(jfscoer.end)
+
+                tmpfilename = os.path.join(tmppath, tmpfile)
+
+                score = list()
+
+                with open(tmpfilename) as inio:
+
+                    for i in inio:
+
+                        score = i.rstrip().split()
+
+                bw.addEntries(jfscoer.seqname, jfscoer.start, values=list(map(float, score)), span=1, step=1)
+
+                print(jfscoer.seqname, jfscoer.start, 'OK')
+
+                inio.close()
+
+                os.remove(tmpfilename)
+        #for jfscoer in map(jellyfish.jfngsscoer, jfscoerlist):
+
+        #    bw.addEntries(jfscoer.seqname, jfscoer.start, values=list(map(float, jfscoer.score)), span=1, step=1)
+
+        #    print(jfscoer.seqname, jfscoer.start, 'OK')
 
     bw.close()
+
 
     bwforcount = pyBigWig.open(bwfile)
 

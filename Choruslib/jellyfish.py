@@ -721,6 +721,30 @@ def jfngsscoer(jfngsscoer):
     return jfngsscoer
 
 
+def jfngsscoerlargegenome(jfngsscoer, tmppath):
+
+    """
+    :param jfngsscoer: JFNGSScoer without score
+    :return:  jfngsscoer with score
+    """
+
+    sequence = jfngsscoer.pyfasta[jfngsscoer.seqfullname][jfngsscoer.start:jfngsscoer.end]
+
+    print("NGS scorer ", jfngsscoer.seqname+":"+str(jfngsscoer.start)+':'+str(jfngsscoer.end))
+
+    score = jfseqNGSkmer(jfngsscoer.jfpath, jfngsscoer.jfkmerfile, jfngsscoer.mer, sequence)
+
+    tmpfile = jfngsscoer.seqname+'_'+str(jfngsscoer.start)+"_"+str(jfngsscoer.end)
+
+    tmpfilename = os.path.join(tmppath, tmpfile)
+
+    tmpio = open(tmpfilename, 'w')
+
+    tmpio.write(' '.join(map(str,score)))
+    #return jfngsscoer
+    tmpio.close()
+
+    print('save to ', tmpfilename)
 
 class JFfpbruner():
 
