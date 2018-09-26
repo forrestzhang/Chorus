@@ -50,7 +50,7 @@ def main():
 
     jfscoerlist = list()
 
-    if genomesize > 2000000000:
+    if genomesize > 1000000000:
 
         spsize = 10000000
 
@@ -91,7 +91,7 @@ def main():
                                                start=start, end=end, seqfullname=seqfullname, pyfasta=fastain)
                 jfscoerlist.append(jfscoer)
 
-    if genomesize < 2000000000:
+    if genomesize < 1000000000:
 
         print("use small genome model")
 
