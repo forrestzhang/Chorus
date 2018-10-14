@@ -115,11 +115,11 @@ def check_options(parser):
 
 def get_options():
 
-    parser = argparse.ArgumentParser(description="Chorus Software for Oligo FISH probe design", prog='Chorus')
+    parser = argparse.ArgumentParser(description="Chorus Software for Oligo FISH probe selection by NGS kmer score", prog='ChorusNGSselect')
 
     parser.add_argument('--version', action='version', version='%(prog)s 1.0')
 
-    parser.add_argument('-i', '--input', dest='input', help='input file generate by ChorusKmerfilter',
+    parser.add_argument('-i', '--input', dest='input', help='input probe file generate by ChorusNGSfilter',
                         required=True, type=str)
 
     parser.add_argument('-o', '--output', dest='output', help='output file, default=filtered_output.bed',
@@ -132,10 +132,10 @@ def get_options():
                         default=10000000, type=int)
 
     parser.add_argument('-q', '--minquantile', dest='minquantile', type=float,
-                        help='filter < min\% score range from (0-1)', default=0.1)
+                        help='filter < min%% score range from (0-1), default=0.1', default=0.1)
 
     parser.add_argument('-p', '--maxquantile', dest='maxquantile', type=float,
-                        help='filter > max\% score range from (0-1)', default=0.9)
+                        help='filter > max%% score range from (0-1), default=0.9', default=0.9)
 
     parser.add_argument('-bs', '--bothstrand', dest='strand', help='use both + and - strand, default is True',
                         action='store_true')

@@ -689,15 +689,15 @@ def get_options():
     parser.add_argument('-t', '--threads', dest='threads', help='threads number or how may cpu you wanna use',
                         default=1, type=int)
 
-    parser.add_argument('-l', '--length', dest='length', help='probe length', default=45, type=int)
+    parser.add_argument('-l', '--length', dest='length', help='probe length, default=45', default=45, type=int)
 
-    parser.add_argument('--homology', dest='homology', help='homology, from 50 to 100', default=75, type=float)
+    parser.add_argument('--homology', dest='homology', help='max homology, from 50 to 100, default=75', default=75, type=float)
 
-    parser.add_argument('-d', '--dtm', dest='dtm', help='dTm, from 0 to 37', default=10, type=float)
+    parser.add_argument('-d', '--dtm', dest='dtm', help='dTm, from 0 to 37, default=10', default=10, type=float)
 
-    parser.add_argument('--step', dest='step', help='step length, min=1', default=5, type=int)
+    parser.add_argument('--step', dest='step', help='step length, min=1, default=5', default=5, type=int)
 
-    parser.add_argument('--docker', default=False)
+    parser.add_argument('--docker', help='only used in Docker', default=False)
 
     parser.add_argument('--ploidy', dest='ploidy', default=2, type=int, help='set ploidy (test version)')
     # parser.parse_args(['--version'])

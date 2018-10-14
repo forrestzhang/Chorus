@@ -324,7 +324,7 @@ def which(filename):
 
 def get_options():
 
-    parser = argparse.ArgumentParser(description="Chorus Software for Oligo FISH probe design", prog='Chorus')
+    parser = argparse.ArgumentParser(description="Chorus Software for counting Oligo FISH probe kmer score using NGS data", prog='ChorusNGSfilter')
 
     parser.add_argument('--version', action='version', version='%(prog)s 1.0')
 
@@ -336,18 +336,18 @@ def get_options():
                         help='fastq format input files, spread with \",\", example: 1.fq.gz,2.fq.gz ', required=True,
                         type=str)
 
-    parser.add_argument('-z', '--gziped', dest='gzip', help='gziped file or not, gz or text', default='gz', required=True)
+    parser.add_argument('-z', '--gziped', dest='gzip', help='input file is gziped or not, default=gz', choices=('gz', 'text'), default='gz', required=True)
 
     # parser.add_argument('-s', '--save', dest='saved', help='result saved folder', default='probes')
 
     parser.add_argument('-t', '--threads', dest='threads', help='threads number or how may cpu you wanna use',
                         default=1, type=int)
 
-    parser.add_argument('-k', '--kmer', dest='kmer', help='kmer length', default=17, type=int)
+    parser.add_argument('-k', '--kmer', dest='kmer', help='kmer length, default=17', default=17, type=int)
 
-    parser.add_argument('-p', '--probe', dest='probe', help='probe file')
+    parser.add_argument('-p', '--probe', dest='probe', help='probe file generate by Chorus')
 
-    parser.add_argument('-o', '--output', dest='output', help='output file', default='output.bed')
+    parser.add_argument('-o', '--output', dest='output', help='output file, default=output.bed', default='output.bed')
 
     # args = parser.parse_args()
 

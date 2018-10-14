@@ -98,7 +98,12 @@ When process done:
     -rw-r--r-- 1 root root  121183059 Aug 24 17:17 TAIR10_chr_all.fas
     -rw-r--r-- 1 root root   78102510 Aug 24 17:17 TAIR10_chr_all.fas_17mer.jf
 
-*TAIR10_chr_all.fas.bed* is the probe file.
+*TAIR10_chr_all.fas.bed* is the probe file contained non-overlapped probes.
+*TAIR10_chr_all.fas_all.bed* is the probe file contained all probes.
+*TAIR10_chr_all.fas.len* is the length info of the given genome chromosomes.
+*TAIR10_chr_all.fas_17mer.jf* is the binary file created by jellyfish count using 17-mer.
+*TAIR10_chr_all.fas_tmp_probe.fa* contains all probe sequences filtered by jellyfish.
+*.bwt, .pac, .ann, .amb, .sa* are bwa index files.
 
 .. code-block:: log
 
@@ -110,7 +115,7 @@ When process done:
     1      	496    	540    	TCTTCGTTGTTGTTACGCTTGTCATCTCATCTCTCAATGATATGG
     1      	551    	595    	TAGCATTTATTCTGAAGTTCTTCTGCTTGATGATTTTATCCTTAG
 
-There are four columns in a row, first column is chromosome name, second is oligo start site, third is oligo end site, last one is oligo probe sequence. You can use excel or text editor to open this file.
+There are four columns in each row, first column is chromosome name, second is oligo start site, third is oligo end site, the last one is oligo probe sequence. You can use excel or text editor to open this file.
 
 
 Using Manually Install Version
@@ -202,7 +207,12 @@ When job finish, the oligo probes will output to 'sample' folder
         -rw-r--r-- 1 root root  121183059 Aug 24 17:17 TAIR10_chr_all.fas
         -rw-r--r-- 1 root root   78102510 Aug 24 17:17 TAIR10_chr_all.fas_17mer.jf
 
-*TAIR10_chr_all.fas.bed* is the probe file.
+*TAIR10_chr_all.fas.bed* is the probe file contained non-overlapped probes.
+*TAIR10_chr_all.fas_all.bed* is the probe file contained all probes.
+*TAIR10_chr_all.fas.len* is the length info of the given genome chromosomes.
+*TAIR10_chr_all.fas_17mer.jf* is the binary file created by jellyfish count using 17-mer.
+*TAIR10_chr_all.fas_tmp_probe.fa* contains all probe sequences filtered by jellyfish.
+*.bwt, .pac, .ann, .amb, .sa* are bwa index files.
 
 .. code-block:: log
 
@@ -214,4 +224,4 @@ When job finish, the oligo probes will output to 'sample' folder
     1      	496    	540    	TCTTCGTTGTTGTTACGCTTGTCATCTCATCTCTCAATGATATGG
     1      	551    	595    	TAGCATTTATTCTGAAGTTCTTCTGCTTGATGATTTTATCCTTAG
 
-There are four columns in a row, first column is chromosome name, second is oligo start site, third is oligo end site, last one is oligo probe sequence. You can use excel or text editor to open this file.
+There are four columns in each row, first column is chromosome name, second is oligo start site, third is oligo end site, the last one is oligo probe sequence. You can use excel or text editor to open this file.
