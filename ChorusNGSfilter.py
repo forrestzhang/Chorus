@@ -28,7 +28,7 @@ def main():
     jellyfish.jfgeneratorscount(jfpath=args.jellyfish, mer=args.kmer, output=jfkmerfile,
                                 generators='generators',threads=args.threads,  size='100M')
 
-    spsize = 5000000
+    spsize = 10000000
 
     fastain = Fasta(args.genome)
 
@@ -50,9 +50,6 @@ def main():
 
     jfscoerlist = list()
 
-    if genomesize > 1000000000:
-
-        spsize = 10000000
 
     for seqfullname in sorted(fastain.keys()):
 
@@ -91,70 +88,39 @@ def main():
                                                start=start, end=end, seqfullname=seqfullname, pyfasta=fastain)
                 jfscoerlist.append(jfscoer)
 
-    if genomesize < 1000000000:
 
-        print("use small genome model")
+    tmppath = os.path.dirname(args.output)
 
-        jfsllength = int(len(jfscoerlist)/args.threads + 1)
+    jfsllength = int(len(jfscoerlist) / args.threads + 1)
 
-        for jt in range(jfsllength):
+    for jt in range(jfsllength):
 
-            if jt == jfsllength:
+        if jt == jfsllength:
 
-                nowlist = jfscoerlist[jt*args.threads:]
+            nowlist = jfscoerlist[jt * args.threads:]
 
-            else:
+        else:
 
-                nowlist = jfscoerlist[(jt * args.threads):((jt+1) * args.threads)]
+            nowlist = jfscoerlist[(jt * args.threads):((jt + 1) * args.threads)]
 
-            pool = Pool(args.threads)
+        processes = list()
 
-            for jfscoer in pool.map(jellyfish.jfngsscoer, (nowlist, 1)):
-
-                bw.addEntries(jfscoer.seqname, jfscoer.start, values=list(map(float,jfscoer.score)), span=1, step=1)
-
-                print(jfscoer.seqname, jfscoer.start, 'OK')
-
-            pool.close()
-
-
-
-    else:
-
-        print("use large genome model")
-
-        tmppath = os.path.dirname(args.output)
-
-        jfsllength = int(len(jfscoerlist) / args.threads + 1)
-
-        for jt in range(jfsllength):
-
-            if jt == jfsllength:
-
-                nowlist = jfscoerlist[jt * args.threads:]
-
-            else:
-
-                nowlist = jfscoerlist[(jt * args.threads):((jt + 1) * args.threads)]
-
-            processes = list()
-
-            for jfscoer in nowlist:
+        for jfscoer in nowlist:
 
                 p = Process(target=jellyfish.jfngsscoerlargegenome, args=(jfscoer,tmppath))
 
                 processes.append(p)
 
-            for p in processes:
+        for p in processes:
 
                 p.start()
 
-            for p in processes:
+        for p in processes:
 
                 p.join()
             # jfngsscoerlargegenome
 
-            for jfscoer in nowlist:
+        for jfscoer in nowlist:
 
                 tmpfile = jfscoer.seqname + '_' + str(jfscoer.start) + "_" + str(jfscoer.end)
 
@@ -175,11 +141,6 @@ def main():
                 inio.close()
 
                 os.remove(tmpfilename)
-        #for jfscoer in map(jellyfish.jfngsscoer, jfscoerlist):
-
-        #    bw.addEntries(jfscoer.seqname, jfscoer.start, values=list(map(float, jfscoer.score)), span=1, step=1)
-
-        #    print(jfscoer.seqname, jfscoer.start, 'OK')
 
     bw.close()
 
