@@ -670,36 +670,41 @@ def which(filename):
 
 def get_options():
 
-    parser = argparse.ArgumentParser(description="Chorus Software for Oligo FISH probe design", prog='Chorus')
+    parser = argparse.ArgumentParser(description="Chorus Software for Oligo FISH probe design", prog='Chorus',
+                                     formatter_class=argparse.RawDescriptionHelpFormatter,
+                                     epilog="Example:\n"
+                                            "  python3 Chorus.py -i TAIR10_chr_all.fas -g TAIR10_chr_all.fas -t 4 \\ \n"
+                                            "                    -j /opt/software/jellyfish/bin/jellyfish -b /opt/software/bwa/bwa -s sample"
+                                     )
 
     parser.add_argument('--version', action='version', version='%(prog)s 1.0')
 
-    parser.add_argument('-j', '--jellyfish', dest='jellyfish', help='jellyfish path')
+    parser.add_argument('-j', '--jellyfish', dest='jellyfish', help='The path where Jellyfish software installed')
 
-    parser.add_argument('-b', '--bwa', dest='bwa', help='bwa path')
+    parser.add_argument('-b', '--bwa', dest='bwa', help='The path where BWA software installed')
 
-    parser.add_argument('-g', '--genome', dest='genome', help='fasta format genome file', required=True)
+    parser.add_argument('-g', '--genome', dest='genome', help='Fasta format genome file, should include all sequences from genome', required=True)
 
-    parser.add_argument('-i', '--input', dest='input', help='fasta format input file', required=True)
+    parser.add_argument('-i', '--input', dest='input', help='Fasta format input file, can be whole genome, a chromosome or one region from genome', required=True)
 
-    parser.add_argument('-s', '--save', dest='saved', help='result saved folder', default='probes')
+    parser.add_argument('-s', '--save', dest='saved', help='The output folder for saving results', default='probes')
 
-    parser.add_argument('-p', '--primer', dest='primer', help='5\' labeled R primer', default='')
+    parser.add_argument('-p', '--primer', dest='primer', help='A specific 5\' labeled R primer for PCR reaction. For example: CGTGGTCGCGTCTCA. (Default is none)', default='')
 
-    parser.add_argument('-t', '--threads', dest='threads', help='threads number or how may cpu you wanna use',
+    parser.add_argument('-t', '--threads', dest='threads', help='Number of threads or CPUs to use. (Default: 1)',
                         default=1, type=int)
 
-    parser.add_argument('-l', '--length', dest='length', help='probe length', default=45, type=int)
+    parser.add_argument('-l', '--length', dest='length', help='The probe length. (Default: 45)', default=45, type=int)
 
-    parser.add_argument('--homology', dest='homology', help='homology, from 50 to 100', default=75, type=float)
+    parser.add_argument('--homology', dest='homology', help='The maximum homology(%%) between target sequence and probe, range from 50 to 100. (Default: 75)', default=75, type=float)
 
-    parser.add_argument('-d', '--dtm', dest='dtm', help='dTm, from 0 to 37', default=10, type=float)
+    parser.add_argument('-d', '--dtm', dest='dtm', help='The minimum value of dTm (hybrid Tm - hairpin Tm), range from 0 to 37. (Default: 10)', default=10, type=float)
 
-    parser.add_argument('--step', dest='step', help='step length, min=1', default=5, type=int)
+    parser.add_argument('--step', dest='step', help='The step length for k-mer searching in a sliding window, step length>=1. (Default: 5)', default=5, type=int)
 
-    parser.add_argument('--docker', default=False)
+    parser.add_argument('--docker', help='Only used in Docker version of Chorus', default=False)
 
-    parser.add_argument('--ploidy', dest='ploidy', default=2, type=int, help='set ploidy (test version)')
+    parser.add_argument('--ploidy', dest='ploidy', default=2, type=int, help='The ploidy of the given genome (test version). (Default: 2)')
     # parser.parse_args(['--version'])
     # args = parser.parse_args()
 
