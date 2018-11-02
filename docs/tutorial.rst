@@ -99,10 +99,15 @@ When process done:
     -rw-r--r-- 1 root root   78102510 Aug 24 17:17 TAIR10_chr_all.fas_17mer.jf
 
 *TAIR10_chr_all.fas.bed* is the probe file contained non-overlapped probes.
+
 *TAIR10_chr_all.fas_all.bed* is the probe file contained all probes.
+
 *TAIR10_chr_all.fas.len* is the length info of the given genome chromosomes.
+
 *TAIR10_chr_all.fas_17mer.jf* is the binary file created by jellyfish count using 17-mer.
+
 *TAIR10_chr_all.fas_tmp_probe.fa* contains all probe sequences filtered by jellyfish.
+
 *.bwt, .pac, .ann, .amb, .sa* are bwa index files.
 
 .. code-block:: log
@@ -208,10 +213,15 @@ When job finish, the oligo probes will output to 'sample' folder
         -rw-r--r-- 1 root root   78102510 Aug 24 17:17 TAIR10_chr_all.fas_17mer.jf
 
 *TAIR10_chr_all.fas.bed* is the probe file contained non-overlapped probes.
+
 *TAIR10_chr_all.fas_all.bed* is the probe file contained all probes.
+
 *TAIR10_chr_all.fas.len* is the length info of the given genome chromosomes.
+
 *TAIR10_chr_all.fas_17mer.jf* is the binary file created by jellyfish count using 17-mer.
+
 *TAIR10_chr_all.fas_tmp_probe.fa* contains all probe sequences filtered by jellyfish.
+
 *.bwt, .pac, .ann, .amb, .sa* are bwa index files.
 
 .. code-block:: log

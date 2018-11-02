@@ -23,14 +23,14 @@ def check_options(parser):
 
 def get_options():
 
-    parser = argparse.ArgumentParser(description="Combine short sequence to speed oligo search")
+    parser = argparse.ArgumentParser(description="Combine short sequence to speed up oligo search", prog="ChorusDraftPrebuild")
 
     parser.add_argument('--version', action='version', version='%(prog)s 1.0')
 
-    parser.add_argument('-i', '--input', dest='input', help='input file',
+    parser.add_argument('-i', '--input', dest='input', help='Fasta format input file contains short sequences',
                         required=True, type=str)
 
-    parser.add_argument('-o', '--output', dest='output', help='output file, default=output.fa',
+    parser.add_argument('-o', '--output', dest='output', help='Fasta format output file with combined long sequences for speeding up oligo search. (default: output.fa)',
                         default='output.fa', type=str)
 
     return parser
