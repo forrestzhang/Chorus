@@ -1,6 +1,8 @@
 # Chorus
 FISH Oligo design
 
+Chorus2 is released. [https://github.com/zhangtaolab/Chorus2](https://github.com/zhangtaolab/Chorus2)
+
 [Documentation](http://chorus.readthedocs.io/en/latest/)
 
 [![Documentation Status](https://readthedocs.org/projects/chorus/badge/?version=dev)](http://chorus.readthedocs.io/en/dev/?badge=dev)
