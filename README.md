@@ -3,8 +3,10 @@ FISH Oligo design
 
 Chorus2 is released. [https://github.com/zhangtaolab/Chorus2](https://github.com/zhangtaolab/Chorus2)
 
-## Citation
-Zhang T†,*, Liu GQ†, Zhao HN, Braz G.T, Jiang JM*. Chorus2: design of genome-scale oligonucleotide-based probes for fluorescence in situ hybridization. Plant Biotechnology Journal (2021) DOI: 10.1111/pbi.13610 (Accepted)
+**Citation**
+
+Zhang T†,\*, Liu GQ†, Zhao HN, Braz G.T, Jiang JM\*. Chorus2: design of genome-scale oligonucleotide-based probes for fluorescence *in situ* hybridization. ***Plant Biotechnology Journal*** (2021) DOI: 10.1111/pbi.13610 (Accepted)
+
 
 [Documentation](http://chorus.readthedocs.io/en/latest/)
 
